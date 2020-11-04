@@ -1,0 +1,210 @@
+
+<html >
+<meta charset="UTF-16">
+<head>
+    <title> NotteDellaRicerca2020 </title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+     <style>
+
+    #panorama {
+        width: 99vw;
+        height: 98vh;
+    }
+
+    #controls {
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        text-align: center;
+        width: 100%;
+        padding-bottom: 3px;
+    }
+    .ctrl {
+        z-index: 99;
+        padding: 8px 5px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+
+
+    .prova1 {
+        background: url("img/SDG/test.gif");
+        background-size:contain;
+        height: 100px;
+        width: 100px;
+    }
+    div.prova1 span {
+        visibility: hidden;
+        position: absolute;
+        border-radius: 3px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        max-width: 200px;
+        padding: 5px 10px;
+        margin-left: -220px;
+        cursor: default;
+    }
+    div.prova1:hover span{
+        visibility: visible;
+    }
+    div.prova1:hover span:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+        bottom: -20px;
+        left: -10px;
+        margin: 0 50%;
+    }
+
+
+
+    </style>
+ </head>
+<body>
+
+<div id="panorama">
+  <div id="controls">
+    <button id="ciao" type="button" class="btn btn-lg btn-danger ctrl" data-toggle="popover" title="Inventario" data-placement="top" data-content="Fino ad ora hai raccolto 0/23 SDGs">Inventario</button>
+    </div>
+  </div>
+
+<script>
+viewer = pannellum.viewer('panorama', {
+  //"hotSpotDebug": true,
+    "autoLoad": true,
+    "default": {
+        "firstScene": "EsternoCampus",
+        "sceneFadeDuration": 1000
+    },
+
+    "scenes": {
+        "EsternoCampus": {
+            "title": "Esterno Campus",
+            "hfov": 110,
+            "pitch": 4.099,
+            "yaw": 107.33,
+            "type": "equirectangular",
+            "panorama": "img/rooms/EsternoCampus.jpg",
+            "hotSpots": [
+                {
+                  "pitch": -1.23,
+                  "yaw": 150,
+                    "type": "scene",
+                    "text": "IngressoCampus",
+                    "sceneId": "IngressoCampus"
+                }
+            ]
+        },
+
+        "IngressoCampus": {
+            "title": "IngressoCampus",
+            "hfov": 110,
+            "yaw": 5,
+            "type": "equirectangular",
+            "panorama": "img/rooms/IngressoCampus.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -0.6,
+                    "yaw": 37.1,
+                    "type": "scene",
+                    "text": "AulaMagna123",
+                    "sceneId": "AulaMagna",
+                    "targetYaw": -23,
+                    "targetPitch": 2
+                },
+                {
+                    "pitch": -14.50,
+                    "yaw": -147.95,
+                    "cssClass": "prova1",
+                    "id": "1",
+                    "clickHandlerFunc": addPoint, //onclick function
+                    "clickHandlerArgs": "1",
+                    //"createTooltipFunc": hotspot,
+                    //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+                },
+                {
+                    "pitch": -14.50,
+                    "yaw": -200.95,
+                    "cssClass": "prova1",
+                    "id": "2",
+                    "clickHandlerFunc": addPoint, //onclick function
+                    "clickHandlerArgs": "2",
+                    //"createTooltipFunc": hotspot,
+                    //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+                }
+            ]
+        },
+
+        "AulaMagna": {
+            "title": "Aula Magna",
+            "hfov": 110,
+            "yaw": 5,
+            "type": "equirectangular",
+            "panorama": "img/rooms/AulaMagna.jpg",
+            "hotSpots": [
+                {
+                    "pitch": -12,
+                    "yaw": -141.57,
+                    "type": "scene",
+                    "text": "EsternoCampus123",
+                    "sceneId": "EsternoCampus",
+                    "targetYaw": 107,
+                    "targetPitch": 4
+                },
+                {
+                    "pitch": -1.40,
+                    "yaw": -170.94,
+                    "type": "info",
+                    "text": "Questa è una bella lavagna"
+                }
+            ]
+        }
+
+    }
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+
+var numeroRitrovamenti = 0;
+
+
+function addPoint(args, i){
+
+  numeroRitrovamenti++;
+  document.getElementById("ciao").setAttribute('data-content',"Attualmente hai trovato " + numeroRitrovamenti + "/23 SDGs!");
+
+  alert("Hai trovato il SDG numero" + i + "!" );
+  console.log(numeroRitrovamenti);
+  viewer.removeHotSpot(i);
+
+
+
+  if (numeroRitrovamenti == 2) {
+    alert("Hai trovato tutti gli SDG!")
+  }
+
+}
+
+
+
+
+</script>
+
+</body>
+</html>
