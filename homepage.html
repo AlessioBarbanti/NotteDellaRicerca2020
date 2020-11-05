@@ -33,8 +33,11 @@ let fileAnimations;
 let clock = new THREE.Clock();
 var renderer = new THREE.WebGLRenderer({ alpha: true });
 
-renderer.setSize(window.innerWidth,window.innerHeight);
-document.body.appendChild(renderer.domElement);
+renderer.setSize(200,200);
+document.getElementById("3Ddiv").appendChild(renderer.domElement);
+
+
+
 
 loader.load( '3Dimg/2_goal.glb', function ( gltf ) {
   model = gltf.scene;

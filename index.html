@@ -10,75 +10,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link rel="stylesheet" href="index.css" />
 
-    <style>
-        #panorama {
-            width: 99vw;
-            height: 98vh;
-        }
-
-        #controls {
-            position: absolute;
-            bottom: 0;
-            z-index: 2;
-            text-align: center;
-            width: 100%;
-            padding-bottom: 3px;
-        }
-
-        .ctrl {
-            z-index: 99;
-            padding: 8px 5px;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-
-
-        .prova1 {
-            background: url("img/SDG/test.gif");
-            background-size: contain;
-            height: 100px;
-            width: 100px;
-        }
-
-        div.prova1 span {
-            visibility: hidden;
-            position: absolute;
-            border-radius: 3px;
-            background-color: #fff;
-            color: #000;
-            text-align: center;
-            max-width: 200px;
-            padding: 5px 10px;
-            margin-left: -220px;
-            cursor: default;
-        }
-
-        div.prova1:hover span {
-            visibility: visible;
-        }
-
-        div.prova1:hover span:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-width: 10px;
-            border-style: solid;
-            border-color: #fff transparent transparent transparent;
-            bottom: -20px;
-            left: -10px;
-            margin: 0 50%;
-        }
-    </style>
-</head>
+    </head>
 
 <body>
-  
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <div id="3Ddiv"></div>
+            </div>
+            <div class="modal-body">
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit voluptate maiores molestias obcaecati nisi? Repudiandae sapiente at laborum obcaecati, accusantium possimus quae aliquid voluptatibus temporibus delectus esse, culpa odio maiores.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
 
     <div id="panorama">
         <div id="controls">
@@ -87,7 +45,13 @@
         </div>
     </div>
 
-    <script>
+
+
+
+
+
+      <script>
+//***************************************************************PANNELLUM*************************************************************//
         viewer = pannellum.viewer('panorama', {
             //"hotSpotDebug": true,
             "autoLoad": true,
@@ -135,8 +99,8 @@
                             "pitch": -14.50,
                             "yaw": -147.95,
                             "cssClass": "prova1",
-                            "id": "1",
-                            "clickHandlerFunc": addPoint, //onclick function
+                            "id": "prova1",
+                            "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
@@ -146,7 +110,7 @@
                             "yaw": -200.95,
                             "cssClass": "prova1",
                             "id": "2",
-                            "clickHandlerFunc": addPoint, //onclick function
+                            "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "2",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
@@ -197,13 +161,19 @@
         //Gestione punti
         var numeroRitrovamenti = 0;
 
+        function showModal(i){
+            $("#myModal").modal();
+            addPoint(i);
+        }
+
+
+
         function addPoint(args, i) {
 
             numeroRitrovamenti++;
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/23 SDGs!");
 
             alert("Hai trovato il SDG numero" + i + "!");
-            console.log(numeroRitrovamenti);
             viewer.removeHotSpot(i);
 
 
@@ -220,6 +190,96 @@
     </script>
 
 
+
+
+<script src="js/three.js"></script>
+		<script type="module">
+            //****************************************************************THREE.JS*************************************************************
+      let model;
+      let wave;
+
+import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+const loader = new GLTFLoader();
+var mixer;
+let fileAnimations;
+let clock = new THREE.Clock();
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+
+renderer.setSize(200,200);
+
+//////////////////////////////////////////////////////////////NOT WORKING, NEED TO FIX IT ////////////////////////////////////////////
+
+console.log(document.getElementsByClassName("prova1"));
+var list = document.getElementsByClassName("prova1");
+console.log(list);
+list.getElementsByClassName("prova1").appendChild(renderer.domElement);
+
+loader.load( '3Dimg/2_goal.glb', function ( gltf ) {
+  model = gltf.scene;
+  model.rotation.x += 0.5;
+  fileAnimations = gltf.animations;
+  mixer = new THREE.AnimationMixer(model);
+  mixer.clipAction(fileAnimations[0]).play();
+  mixer.clipAction(fileAnimations[1]).play();
+  mixer.clipAction(fileAnimations[2]).play();
+scene.add( gltf.scene );
+
+}, undefined, function ( error ) {
+
+console.error(error);
+
+} );
+
+
+camera.position.z = 5;
+const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444, 1.1 );
+hemiLight.position.set( 10, 20, 10 );
+scene.add( hemiLight );
+
+const dirLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+dirLight.position.set( - 3, 10, - 10 );
+scene.add( dirLight );
+const controls = new OrbitControls( camera, renderer.domElement );
+
+
+
+
+
+//controls.update() must be called after any manual changes to the camera's transform
+controls.update();
+
+function animate() {
+
+    requestAnimationFrame( animate );
+    if (mixer) {
+      model.rotation.y += 0.01;
+    mixer.update(clock.getDelta());
+  }
+
+	controls.update();
+	renderer.render( scene, camera );
+
+}
+
+
+
+
+
+animate();
+
+
+
+
+
+
+
+
+  </script>
 
 </body>
 
