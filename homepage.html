@@ -1,30 +1,102 @@
 <!DOCTYPE html>
-<html lang="it" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Caccia al tesoro - Notte della Ricerca 2020</title>
+<html>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>My first three.js app</title>
+  <style>
+    body {
+      margin: 0;
+    }
 
-  </head>
-  <style media="screen">
-
-  body, html {
-  height: 100%;
-  margin: 0;
-}
-body{
-  height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+    canvas {
+      display: block;
+    }
   </style>
-  <body>
-<div class="">
+</head>
 
-</div>
-  </body>
+<body>
+  <script src="js/three.js"></script>
+		<script type="module">
+      let model;
+      let wave;
+
+import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
+
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+const loader = new GLTFLoader();
+var mixer;
+let fileAnimations;
+let clock = new THREE.Clock();
+var renderer = new THREE.WebGLRenderer({ alpha: true });
+
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+loader.load( '3Dimg/2_goal.glb', function ( gltf ) {
+  model = gltf.scene;
+  model.rotation.x += 0.5;
+  fileAnimations = gltf.animations;
+  mixer = new THREE.AnimationMixer(model);
+  mixer.clipAction(fileAnimations[0]).play();
+  mixer.clipAction(fileAnimations[1]).play();
+  mixer.clipAction(fileAnimations[2]).play();
+scene.add( gltf.scene );
+
+}, undefined, function ( error ) {
+
+console.error(error);
+
+} );
+
+
+camera.position.z = 5;
+const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444, 1.1 );
+hemiLight.position.set( 10, 20, 10 );
+scene.add( hemiLight );
+
+const dirLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+dirLight.position.set( - 3, 10, - 10 );
+scene.add( dirLight );
+const controls = new OrbitControls( camera, renderer.domElement );
+
+
+
+
+
+//controls.update() must be called after any manual changes to the camera's transform
+controls.update();
+
+function animate() {
+
+    requestAnimationFrame( animate );
+    if (mixer) {
+      model.rotation.y += 0.01;
+    mixer.update(clock.getDelta());
+  }
+
+	controls.update();
+	renderer.render( scene, camera );
+
+}
+
+
+
+
+
+animate();
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
 </html>
