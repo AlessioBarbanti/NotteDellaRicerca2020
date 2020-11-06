@@ -10,33 +10,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" href="index.css" />
 
-    </head>
+</head>
 
 <body>
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
-        
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <div id="3Ddiv"></div>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div id="3Ddiv"></div>
+                </div>
+                <div class="modal-body">
+                    <p>Ingresso in Aula Magna Sbloccato!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit voluptate maiores molestias obcaecati nisi? Repudiandae sapiente at laborum obcaecati, accusantium possimus quae aliquid voluptatibus temporibus delectus esse, culpa odio maiores.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-            </div>
-          </div>
-          
+
         </div>
-      </div>
+    </div>
 
     <div id="panorama">
         <div id="controls">
@@ -47,12 +47,12 @@
 
 
 
+    <script src="js/three.js"></script>
 
 
-
-      <script>
-//***************************************************************PANNELLUM*************************************************************//
-        viewer = pannellum.viewer('panorama', {
+    <script type="module">
+        //***************************************************************PANNELLUM*************************************************************//
+        var viewer = pannellum.viewer('panorama', {
             //"hotSpotDebug": true,
             "autoLoad": true,
             "default": {
@@ -60,7 +60,7 @@
                 "sceneFadeDuration": 1000
             },
 
-            "scenes": {
+            "scenes": { 
                 "EsternoCampus": {
                     "title": "Esterno Campus",
                     "hfov": 110,
@@ -86,20 +86,12 @@
                     "type": "equirectangular",
                     "panorama": "img/rooms/IngressoCampus.jpg",
                     "hotSpots": [
-                        {
-                            "pitch": -0.6,
-                            "yaw": 37.1,
-                            "type": "scene",
-                            "text": "AulaMagna123",
-                            "sceneId": "AulaMagna",
-                            "targetYaw": -23,
-                            "targetPitch": 2
-                        },
+
                         {
                             "pitch": -14.50,
                             "yaw": -147.95,
                             "cssClass": "prova1",
-                            "id": "prova1",
+                            "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
@@ -129,7 +121,7 @@
                             "pitch": -12,
                             "yaw": -141.57,
                             "type": "scene",
-                            "text": "EsternoCampus123",
+                            "text": "EsternoCampus",
                             "sceneId": "EsternoCampus",
                             "targetYaw": 107,
                             "targetPitch": 4
@@ -146,6 +138,8 @@
             }
         });
 
+
+
         $(document).ready(function () {
             $('[data-toggle="popover"]').popover();
         });
@@ -156,27 +150,38 @@
 
 
 
-
-
         //Gestione punti
         var numeroRitrovamenti = 0;
 
-        function showModal(i){
+        function showModal(args, i) {
+            var tempI = i;
             $("#myModal").modal();
-            addPoint(i);
+            console.log("valore di i dentro showmodal:" + tempI)
+            addPoint(tempI);
         }
 
 
 
-        function addPoint(args, i) {
+        function addPoint(i) {
+            console.log("valore di i dentro addPoint:" + i)
 
             numeroRitrovamenti++;
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/23 SDGs!");
+            console.log("valore2 di i dentro addPoint:" + i)
 
-            alert("Hai trovato il SDG numero" + i + "!");
-            viewer.removeHotSpot(i);
-
-
+            var bool = viewer.removeHotSpot(i,viewer.getScene());
+            console.log("removeHotSpot succesful? = "+ bool)
+            
+            viewer.addHotSpot(
+                {                  
+                            "pitch": -0.6,
+                            "yaw": 37.1,
+                            "type": "scene",
+                            "text": "AulaMagna",
+                            "sceneId": "AulaMagna",
+                            "targetYaw": -23,
+                            "targetPitch": 2
+                });
 
             if (numeroRitrovamenti == 2) {
                 alert("Hai trovato tutti gli SDG!")
@@ -187,99 +192,106 @@
 
 
 
+
+        //****************************************************************THREE.JS*************************************************************
+        let model;
+        let wave;
+
+        import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+        const loader = new GLTFLoader();
+        var mixer;
+        let fileAnimations;
+        let clock = new THREE.Clock();
+        var renderer = new THREE.WebGLRenderer({ alpha: true });
+
+        renderer.setSize(100, 100);
+
+        
+
+        loader.load('3Dimg/2_goal.glb', function (gltf) {
+            model = gltf.scene;
+            model.rotation.x += 0.5;
+            fileAnimations = gltf.animations;
+            mixer = new THREE.AnimationMixer(model);
+            mixer.clipAction(fileAnimations[0]).play();
+            mixer.clipAction(fileAnimations[1]).play();
+            mixer.clipAction(fileAnimations[2]).play();
+            scene.add(gltf.scene);
+
+        }, undefined, function (error) {
+
+            console.error(error);
+
+        });
+
+
+        camera.position.z = 3.5;
+        camera.position.y = 0.2;
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.1);
+        hemiLight.position.set(10, 20, 10);
+        scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(- 3, 10, - 10);
+        scene.add(dirLight);
+        // const controls = new OrbitControls(camera, renderer.domElement);
+
+
+
+
+
+        //controls.update() must be called after any manual changes to the camera's transform
+        // controls.update();
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+            if (mixer) {
+                model.rotation.y += 0.01;
+                mixer.update(clock.getDelta());
+            }
+
+            // controls.update();
+            renderer.render(scene, camera);
+
+        }
+
+
+
+
+
+        animate();
+
+
+
+         
+
+
+        function sceneChangeListener() {
+            console.log("Scene changed");
+            console.log("Scene id: " + viewer.getScene());
+
+        };
+
+        function sceneLoadListener() {
+            console.log("Load done");
+            var hotspotList = document.getElementsByClassName("prova1");
+            if(viewer.getScene() == "IngressoCampus"){
+                console.log(hotspotList);    
+                hotspotList[0].appendChild(renderer.domElement);
+                }
+            };
+
+        viewer.on('scenechange', sceneChangeListener);
+        viewer.on('load', sceneLoadListener);
+
+
     </script>
-
-
-
-
-<script src="js/three.js"></script>
-		<script type="module">
-            //****************************************************************THREE.JS*************************************************************
-      let model;
-      let wave;
-
-import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
-const loader = new GLTFLoader();
-var mixer;
-let fileAnimations;
-let clock = new THREE.Clock();
-var renderer = new THREE.WebGLRenderer({ alpha: true });
-
-renderer.setSize(200,200);
-
-//////////////////////////////////////////////////////////////NOT WORKING, NEED TO FIX IT ////////////////////////////////////////////
-
-console.log(document.getElementsByClassName("prova1"));
-var list = document.getElementsByClassName("prova1");
-console.log(list);
-list.getElementsByClassName("prova1").appendChild(renderer.domElement);
-
-loader.load( '3Dimg/2_goal.glb', function ( gltf ) {
-  model = gltf.scene;
-  model.rotation.x += 0.5;
-  fileAnimations = gltf.animations;
-  mixer = new THREE.AnimationMixer(model);
-  mixer.clipAction(fileAnimations[0]).play();
-  mixer.clipAction(fileAnimations[1]).play();
-  mixer.clipAction(fileAnimations[2]).play();
-scene.add( gltf.scene );
-
-}, undefined, function ( error ) {
-
-console.error(error);
-
-} );
-
-
-camera.position.z = 5;
-const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x444444, 1.1 );
-hemiLight.position.set( 10, 20, 10 );
-scene.add( hemiLight );
-
-const dirLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
-dirLight.position.set( - 3, 10, - 10 );
-scene.add( dirLight );
-const controls = new OrbitControls( camera, renderer.domElement );
-
-
-
-
-
-//controls.update() must be called after any manual changes to the camera's transform
-controls.update();
-
-function animate() {
-
-    requestAnimationFrame( animate );
-    if (mixer) {
-      model.rotation.y += 0.01;
-    mixer.update(clock.getDelta());
-  }
-
-	controls.update();
-	renderer.render( scene, camera );
-
-}
-
-
-
-
-
-animate();
-
-
-
-
-
-
-
-
-  </script>
 
 </body>
 

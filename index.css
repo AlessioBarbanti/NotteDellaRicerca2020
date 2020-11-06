@@ -21,12 +21,7 @@
 
 
 
-.prova1 {
-    background: url("img/SDG/test.gif");
-    background-size: contain;
-    height: 100px;
-    width: 100px;
-}
+
 
 div.prova1 span {
     visibility: hidden;
