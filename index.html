@@ -3,10 +3,6 @@
 
 <head>
     <title> NotteDellaRicerca2020 </title>
-
-
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -14,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" href="index.css" />
-
+    <!-- TODO OBBLIGARE IL LANDSCAPE-->
 </head>
 
 <body>
@@ -28,7 +24,7 @@
                     <div id="3Ddiv"></div>
                 </div>
                 <div class="modal-body">
-                    <p>Ingresso in Aula Magna Sbloccato!</p>
+                    <p>Ingresso in Aula Magna sbloccato!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -51,9 +47,12 @@
 
 
     <script type="module">
+
+
+
         //***************************************************************PANNELLUM*************************************************************//
         var viewer = pannellum.viewer('panorama', {
-            //"hotSpotDebug": true,
+            "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
                 "firstScene": "EsternoCampus",
@@ -61,11 +60,26 @@
             },
 
             "scenes": { 
+
+
                 "EsternoCampus": {
-                    "title": "Esterno Campus",
-                    "hfov": 110,
-                    "pitch": 4.099,
-                    "yaw": 107.33,
+                    "title": "EsternoCampus",
+                    "pitch": 9,
+                    "yaw": 45,
+
+                    // "minYaw": -90, //metà di haov
+                    // "maxYaw": 90,
+                    // "minPitch": 0,
+                    // "maxPitch": 0,
+
+                    // "haov": 180,
+                    // "vaov": 68,
+
+                    // "hfov": 40,
+                    // "vfov": 500,
+                    // "minHfov": 50,
+                    // "maxHfov": 100,
+
                     "type": "equirectangular",
                     "panorama": "img/rooms/EsternoCampus.jpg",
                     "hotSpots": [
@@ -76,8 +90,12 @@
                             "text": "IngressoCampus",
                             "sceneId": "IngressoCampus"
                         }
-                    ]
+                    ],
+                    
                 },
+
+
+
 
                 "IngressoCampus": {
                     "title": "IngressoCampus",
@@ -110,6 +128,32 @@
                     ]
                 },
 
+
+                "Hall1": {
+                    "title": "Hall1",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/hall1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "AulaMagna",
+                            "sceneId": "AulaMagna",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+
                 "AulaMagna": {
                     "title": "Aula Magna",
                     "hfov": 110,
@@ -121,8 +165,347 @@
                             "pitch": -12,
                             "yaw": -141.57,
                             "type": "scene",
-                            "text": "EsternoCampus",
-                            "sceneId": "EsternoCampus",
+                            "text": "corte1",
+                            "sceneId": "Corte1",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+
+                 "Corte1": {
+                    "title": "Corte1",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/corte1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "corte1",
+                            "sceneId": "Corte1",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Corte2": {
+                    "title": "Corte2",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/corte2.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Aula1",
+                            "sceneId": "Aula1",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Aula1": {
+                    "title": "Aula1",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/aula1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Aula2",
+                            "sceneId": "Aula2",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Aula2": {
+                    "title": "Aula2",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/aula2.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Corridoio1",
+                            "sceneId": "Corridoio1",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Corridoio1": {
+                    "title": "corridoio1",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/Corridoio1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Balcone",
+                            "sceneId": "Balcone",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Balcone": {
+                    "title": "Balcone",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/balcone.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Bar",
+                            "sceneId": "Bar",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                    "Bar": {
+                    "title": "Bar",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/bar.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Corridoio2",
+                            "sceneId": "Corridoio2",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Corridoio2": {
+                    "title": "Corridoio2",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/corridoio2.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Biblioteca",
+                            "sceneId": "Biblioteca",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Biblioteca": {
+                    "title": "Biblioteca",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/biblioteca.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Hall2",
+                            "sceneId": "Hall2",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Hall2": {
+                    "title": "Hall2",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/hall2.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Hall3",
+                            "sceneId": "Hall3",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+               
+
+                "Hall3": {
+                    "title": "Hall3",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/hall3.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Aula4",
+                            "sceneId": "Aula4",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Aula4": {
+                    "title": "Aula4",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/aula4.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Lab1",
+                            "sceneId": "Lab1",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Lab1": {
+                    "title": "Lab1",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/lab1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "Lab4",
+                            "sceneId": "Lab4",
+                            "targetYaw": 107,
+                            "targetPitch": 4
+                        },
+                        {
+                            "pitch": -1.40,
+                            "yaw": -170.94,
+                            "type": "info",
+                            "text": "Questa è una bella lavagna"
+                        }
+                    ]
+                },
+                "Lab4": {
+                    "title": "Lab4",
+                    "hfov": 110,
+                    "yaw": 5,
+                    "type": "equirectangular",
+                    "panorama": "img/rooms/lab4.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -12,
+                            "yaw": -141.57,
+                            "type": "scene",
+                            "text": "corte1",
+                            "sceneId": "Corte1",
                             "targetYaw": 107,
                             "targetPitch": 4
                         },
@@ -134,7 +517,6 @@
                         }
                     ]
                 }
-
             }
         });
 
@@ -156,21 +538,17 @@
         function showModal(args, i) {
             var tempI = i;
             $("#myModal").modal();
-            console.log("valore di i dentro showmodal:" + tempI)
             addPoint(tempI);
         }
 
 
 
         function addPoint(i) {
-            console.log("valore di i dentro addPoint:" + i)
 
             numeroRitrovamenti++;
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/23 SDGs!");
-            console.log("valore2 di i dentro addPoint:" + i)
 
             var bool = viewer.removeHotSpot(i,viewer.getScene());
-            console.log("removeHotSpot succesful? = "+ bool)
             
             viewer.addHotSpot(
                 {                  
@@ -194,22 +572,22 @@
 
 
         //****************************************************************THREE.JS*************************************************************
-        let model;
-        let wave;
+
 
         import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
         import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
-
+        let model;
+        let wave;
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
         const loader = new GLTFLoader();
         var mixer;
         let fileAnimations;
         let clock = new THREE.Clock();
-        var renderer = new THREE.WebGLRenderer({ alpha: true });
+        var renderer = new THREE.WebGLRenderer({alpha: true });
 
-        renderer.setSize(100, 100);
+        renderer.setSize(200, 200);
 
         
 
@@ -218,6 +596,7 @@
             model.rotation.x += 0.5;
             fileAnimations = gltf.animations;
             mixer = new THREE.AnimationMixer(model);
+            console.log(gltf.animations);
             mixer.clipAction(fileAnimations[0]).play();
             mixer.clipAction(fileAnimations[1]).play();
             mixer.clipAction(fileAnimations[2]).play();
@@ -239,14 +618,14 @@
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
         dirLight.position.set(- 3, 10, - 10);
         scene.add(dirLight);
-        // const controls = new OrbitControls(camera, renderer.domElement);
+        const controls = new OrbitControls(camera, renderer.domElement);
 
 
 
 
 
-        //controls.update() must be called after any manual changes to the camera's transform
-        // controls.update();
+        
+        controls.update();
 
         function animate() {
 
@@ -256,7 +635,7 @@
                 mixer.update(clock.getDelta());
             }
 
-            // controls.update();
+            controls.update();
             renderer.render(scene, camera);
 
         }
