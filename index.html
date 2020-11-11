@@ -55,8 +55,8 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "EsternoCampus",
-                "sceneFadeDuration": 1000
+                "firstScene": "Aula2",
+                "sceneFadeDuration": 2000
             },
 
             "scenes": { 
@@ -131,25 +131,39 @@
 
                 "Hall1": {
                     "title": "Hall1",
-                    "hfov": 110,
-                    "yaw": 5,
+                    "yaw": 0,
+
+                     "minYaw": -179,
+                     "maxYaw": 179,
+                    "minPitch": 0,
+                    "maxPitch": 0,
+
+                    "haov": 360,
+                    "vaov": 86,
+
+                    "hfov": 64,
+                    // "vfov": 100, ???
+                     "minHfov": 50,
+                     "maxHfov": 100,
+
+
                     "type": "equirectangular",
                     "panorama": "img/rooms/hall1.jpg",
                     "hotSpots": [
                         {
-                            "pitch": -12,
-                            "yaw": -141.57,
+                            "pitch": 7.2,
+                            "yaw": -164.52,
                             "type": "scene",
                             "text": "AulaMagna",
                             "sceneId": "AulaMagna",
                             "targetYaw": 107,
                             "targetPitch": 4
                         },
-                        {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
+                        { 
+                            "pitch": 13.38,
+                            "yaw": -119.1,
                             "type": "info",
-                            "text": "Questa è una bella lavagna"
+                            "text": "Lorem ipsum"
                         }
                     ]
                 },
@@ -182,37 +196,41 @@
                  "Corte1": {
                     "title": "Corte1",
                     "hfov": 110,
-                    "yaw": 5,
+                    "yaw": 0,
+                    "vaov": 95,
+                    "haov": 250,    
                     "type": "equirectangular",
                     "panorama": "img/rooms/corte1.jpg",
                     "hotSpots": [
                         {
-                            "pitch": -12,
-                            "yaw": -141.57,
+                            "pitch": 8.4,
+                            "yaw": -33.91,
                             "type": "scene",
-                            "text": "corte1",
-                            "sceneId": "Corte1",
+                            "text": "Corte2",
+                            "sceneId": "Corte2",
                             "targetYaw": 107,
                             "targetPitch": 4
                         },
                         {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
+                            "pitch": 0,
+                            "yaw": 0,
                             "type": "info",
-                            "text": "Questa è una bella lavagna"
+                            "text": "Lorem Ipsum"
                         }
                     ]
                 },
                 "Corte2": {
                     "title": "Corte2",
                     "hfov": 110,
-                    "yaw": 5,
+                    "yaw": 0,
+                    "vaov": 95,
+                    "haov": 250,
                     "type": "equirectangular",
                     "panorama": "img/rooms/corte2.jpg",
                     "hotSpots": [
-                        {
-                            "pitch": -12,
-                            "yaw": -141.57,
+                        { 
+                            "pitch": 2.55,
+                            "yaw": -43.96,
                             "type": "scene",
                             "text": "Aula1",
                             "sceneId": "Aula1",
@@ -220,23 +238,25 @@
                             "targetPitch": 4
                         },
                         {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
+                            "pitch": 0,
+                            "yaw": 0,
                             "type": "info",
-                            "text": "Questa è una bella lavagna"
+                            "text": "Lorem Ipsum"
                         }
                     ]
                 },
                 "Aula1": {
                     "title": "Aula1",
                     "hfov": 110,
-                    "yaw": 5,
+                    "yaw": 0,
+                    "vaov": 80,
+                    "haov": 250,
                     "type": "equirectangular",
                     "panorama": "img/rooms/aula1.jpg",
                     "hotSpots": [
-                        {
-                            "pitch": -12,
-                            "yaw": -141.57,
+                        { 
+                            "pitch":  15.79,
+                            "yaw": 44.70,
                             "type": "scene",
                             "text": "Aula2",
                             "sceneId": "Aula2",
@@ -244,32 +264,33 @@
                             "targetPitch": 4
                         },
                         {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
+                            "pitch":0,
+                            "yaw": 0,
                             "type": "info",
-                            "text": "Questa è una bella lavagna"
+                            "text": "Lorem ipsum"
                         }
                     ]
                 },
                 "Aula2": {
                     "title": "Aula2",
-                    "hfov": 110,
-                    "yaw": 5,
+                    "haov": 120,
+                    "vaov": 67,
+                    "yaw": 0,
                     "type": "equirectangular",
                     "panorama": "img/rooms/aula2.jpg",
                     "hotSpots": [
                         {
-                            "pitch": -12,
-                            "yaw": -141.57,
+                            "pitch":  -3.96,
+                            "yaw": 48.83,
                             "type": "scene",
                             "text": "Corridoio1",
                             "sceneId": "Corridoio1",
                             "targetYaw": 107,
                             "targetPitch": 4
                         },
-                        {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
+                        { 
+                            "pitch": -0.39,
+                            "yaw": -11.12,
                             "type": "info",
                             "text": "Questa è una bella lavagna"
                         }
@@ -278,7 +299,9 @@
                 "Corridoio1": {
                     "title": "corridoio1",
                     "hfov": 110,
-                    "yaw": 5,
+                    "yaw": 44.575,
+                    "haov": 160,
+                    "vaov": 120,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Corridoio1.jpg",
                     "hotSpots": [
@@ -504,8 +527,8 @@
                             "pitch": -12,
                             "yaw": -141.57,
                             "type": "scene",
-                            "text": "corte1",
-                            "sceneId": "Corte1",
+                            "text": "AulaMagna",
+                            "sceneId": "AulaMagna",
                             "targetYaw": 107,
                             "targetPitch": 4
                         },
@@ -546,7 +569,7 @@
         function addPoint(i) {
 
             numeroRitrovamenti++;
-            document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/23 SDGs!");
+            document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/17 SDGs!");
 
             var bool = viewer.removeHotSpot(i,viewer.getScene());
             
@@ -555,15 +578,15 @@
                             "pitch": -0.6,
                             "yaw": 37.1,
                             "type": "scene",
-                            "text": "AulaMagna",
-                            "sceneId": "AulaMagna",
+                            "text": "Hall1",
+                            "sceneId": "Hall1",
                             "targetYaw": -23,
                             "targetPitch": 2
                 });
 
-            if (numeroRitrovamenti == 2) {
-                alert("Hai trovato tutti gli SDG!")
-            }
+            // if (numeroRitrovamenti == 2) {
+            //     alert("Hai trovato tutti gli SDG!")
+            // }
 
         }
 
@@ -658,7 +681,7 @@
         };
 
         function sceneLoadListener() {
-            console.log("Load done");
+            // console.log("Load done");
             var hotspotList = document.getElementsByClassName("prova1");
             if(viewer.getScene() == "IngressoCampus"){
                 console.log(hotspotList);    
