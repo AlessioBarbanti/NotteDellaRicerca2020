@@ -21,7 +21,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <div id="3Ddiv"></div>
+                    <div id="div3D"></div>
                 </div>
                 <div class="modal-body">
                     <p>Ingresso in Aula Magna sbloccato!</p>
@@ -55,29 +55,49 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "EsternoCampus",
+                "firstScene": "Esterno1",
                 "sceneFadeDuration": 2000
             },
 
             "scenes": { 
 
 
-                "EsternoCampus": {
-                    "title": "EsternoCampus",
-                    "pitch": 9,
-                    "yaw": 45,
+                "Esterno1": {
+                    "title": "Esterno1",
+                   "pitch" : 0,
+                    "yaw": 0,
                     "type": "equirectangular",
-                    "panorama": "img/rooms/Aula2.jpg",
+                    "panorama": "img/rooms/Esterno1.jpg",
                     "hotSpots": [
+
                         {
-                            "pitch": -1.23,
-                            "yaw": 150,
+                            "pitch": -14.50,
+                            "yaw": -147.95,
+                            "cssClass": "currentGifDiv",
+                            "id": "1",
+                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerArgs": "1",
+                            //"createTooltipFunc": hotspot,
+                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+                        },
+                        // {
+                        //     "pitch": -14.50,
+                        //     "yaw": -147.95,
+                        //     "cssClass": "currentGifDiv",
+                        //     "id": "1",
+                        //     "clickHandlerFunc": showModal, //onclick function
+                        //     "clickHandlerArgs": "1",
+                        //     //"createTooltipFunc": hotspot,
+                        //     //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+                        // },                        
+                        {
+                            "pitch": 0,
+                            "yaw": 20,
                             "type": "scene",
-                            "text": "IngressoCampus",
-                            "sceneId": "IngressoCampus"
+                            "text": "Esterno2",
+                            "sceneId": "Esterno2"
                         }
-                    ],
-                    
+                    ]
                 },
 
 
@@ -669,48 +689,13 @@
                             "pitch": -1.23,
                             "yaw": 150,
                             "type": "scene",
-                            "text": "Esterno1",
-                            "sceneId": "Esterno1"
-                        }
-                    ]
-                },
-
-                "Esterno1": {
-                    "title": "Esterno1",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Esterno1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
                             "text": "Esterno2",
                             "sceneId": "Esterno2"
                         }
                     ]
                 },
+
+
 
                 "Esterno2": {
                     "title": "Esterno2",
@@ -891,13 +876,9 @@
 
 
 
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-
-
-
-
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
 
 
 
@@ -905,11 +886,11 @@
         var numeroRitrovamenti = 0;
 
         function showModal(args, i) {
+            console.log("EHI!");
             var tempI = i;
             $("#myModal").modal();
             addPoint(tempI);
         }
-
 
 
         function addPoint(i) {
@@ -965,7 +946,7 @@
             model.rotation.x += 0.5;
             fileAnimations = gltf.animations;
             mixer = new THREE.AnimationMixer(model);
-            console.log(gltf.animations);
+            // console.log(gltf.animations);
             mixer.clipAction(fileAnimations[0]).play();
             mixer.clipAction(fileAnimations[1]).play();
             mixer.clipAction(fileAnimations[2]).play();
@@ -1008,11 +989,6 @@
             renderer.render(scene, camera);
 
         }
-
-
-
-
-
         animate();
 
 
@@ -1020,22 +996,28 @@
          
 
 
-        function sceneChangeListener() {
-            console.log("Scene changed");
-            console.log("Scene id: " + viewer.getScene());
+        // function sceneChangeListener() {
+        //     console.log("Scene changed");
+        //     console.log("Scene id: " + viewer.getScene());
 
-        };
+        // };
 
-        function sceneLoadListener() {
-            // console.log("Load done");
-            var hotspotList = document.getElementsByClassName("currentGifDiv");
-            if(viewer.getScene() == "IngressoCampus"){
-                console.log(hotspotList);    
-                hotspotList[0].appendChild(renderer.domElement);
-                }
-            };
+    function sceneLoadListener() {
+        // console.log("Load done");
+        //console.log(hotspotList);
+        var hotspotList = document.getElementsByClassName("currentGifDiv");
+        //Div on resize not possible or really difficult :(
+        //https://github.com/mpetroff/pannellum/issues/665
+        hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 10);
+        hotspotList[0].style.height = hotspotList[0].style.width;
+       
 
-        viewer.on('scenechange', sceneChangeListener);
+        if (viewer.getScene() == "Esterno1") {
+            hotspotList[0].style.backgroundImage = "url('./img/SDGGif/1.gif')";
+        }
+    };
+
+        // viewer.on('scenechange', sceneChangeListener);
         viewer.on('load', sceneLoadListener);
 
 

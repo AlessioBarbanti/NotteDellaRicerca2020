@@ -32,7 +32,8 @@
 
 
 
-div.prova1 span {
+div.myModal span {
+    z-index: 100;
     visibility: hidden;
     position: absolute;
     border-radius: 3px;
@@ -45,11 +46,15 @@ div.prova1 span {
     cursor: default;
 }
 
-div.prova1:hover span {
+div.myModal:hover span {
     visibility: visible;
+    z-index: 100;
+
 }
 
-div.prova1:hover span:after {
+div.myModal:hover span:after {
+    z-index: 100;
+
     content: '';
     position: absolute;
     width: 0;
@@ -60,4 +65,11 @@ div.prova1:hover span:after {
     bottom: -20px;
     left: -10px;
     margin: 0 50%;
+}
+
+
+
+
+.currentGifDiv{
+    background-size: cover;
 }
