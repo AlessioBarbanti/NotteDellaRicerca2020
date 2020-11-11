@@ -24,7 +24,7 @@
                     <div id="div3D"></div>
                 </div>
                 <div class="modal-body">
-                    <p>Ingresso in Aula Magna sbloccato!</p>
+                    <p>Ingresso in *** sbloccato!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -51,20 +51,22 @@
 
 
         //***************************************************************PANNELLUM*************************************************************//
+
+
         var viewer = pannellum.viewer('panorama', {
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Esterno1",
+                "firstScene": "Aula3",// "Esterno1",
                 "sceneFadeDuration": 2000
             },
 
-            "scenes": { 
+            "scenes": {
 
 
                 "Esterno1": {
                     "title": "Esterno1",
-                   "pitch" : 0,
+                    "pitch": 0,
                     "yaw": 0,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Esterno1.jpg",
@@ -79,23 +81,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        // {
-                        //     "pitch": -14.50,
-                        //     "yaw": -147.95,
-                        //     "cssClass": "currentGifDiv",
-                        //     "id": "1",
-                        //     "clickHandlerFunc": showModal, //onclick function
-                        //     "clickHandlerArgs": "1",
-                        //     //"createTooltipFunc": hotspot,
-                        //     //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        // },                        
-                        {
-                            "pitch": 0,
-                            "yaw": 20,
-                            "type": "scene",
-                            "text": "Esterno2",
-                            "sceneId": "Esterno2"
                         }
                     ]
                 },
@@ -120,22 +105,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Aula1",
-                            "sceneId": "Aula1"
                         }
                     ]
                 },
@@ -166,12 +135,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Aula2",
-                            "sceneId": "Aula2"
                         }
                     ]
                 },
@@ -193,22 +156,6 @@
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
                         },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Aula3",
-                            "sceneId": "Aula3"
-                        }
                     ]
                 },
                 "Aula3": {
@@ -228,22 +175,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Aula4",
-                            "sceneId": "Aula4"
                         }
                     ]
                 },
@@ -265,22 +196,7 @@
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
                         },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Aula5",
-                            "sceneId": "Aula5"
-                        }
+
                     ]
                 },
 
@@ -301,22 +217,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Balcone",
-                            "sceneId": "Balcone"
                         }
                     ]
                 },
@@ -338,22 +238,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Bar",
-                            "sceneId": "Bar"
                         }
                     ]
                 },
@@ -375,26 +259,10 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Biblioteca",
-                            "sceneId": "Biblioteca"
                         }
                     ]
                 },
-                
+
                 "Biblioteca": {
                     "title": "Biblioteca",
                     "hfov": 110,
@@ -412,26 +280,10 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corridoio1",
-                            "sceneId": "Corridoio1"
                         }
                     ]
                 },
- 
+
                 "Corridoio1": {
                     "title": "Corridoio1",
                     "hfov": 110,
@@ -449,27 +301,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corridoio2",
-                            "sceneId": "Corridoio2"
                         }
                     ]
                 },
 
- 
+
                 "Corridoio2": {
                     "title": "Corridoio2",
                     "hfov": 110,
@@ -497,17 +333,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corridoio3",
-                            "sceneId": "Corridoio3"
                         }
                     ]
                 },
 
- 
+
                 "Corridoio3": {
                     "title": "Corridoio3",
                     "hfov": 110,
@@ -525,27 +355,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
-                            "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corridoio4",
-                            "sceneId": "Corridoio4"
                         }
                     ]
                 },
 
- 
+
                 "Corridoio4": {
                     "title": "Corridoio4",
                     "hfov": 110,
@@ -573,17 +387,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corte1",
-                            "sceneId": "Corte1"
-                        }
+                        },
                     ]
                 },
 
- 
+
                 "Corte1": {
                     "title": "Corte1",
                     "hfov": 110,
@@ -611,13 +419,7 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Corte2",
-                            "sceneId": "Corte2"
-                        }
+                        },
                     ]
                 },
 
@@ -648,12 +450,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Disi",
-                            "sceneId": "Disi"
                         }
                     ]
                 },
@@ -685,12 +481,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Esterno2",
-                            "sceneId": "Esterno2"
                         }
                     ]
                 },
@@ -724,17 +514,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Hall1",
-                            "sceneId": "Hall1"
                         }
                     ]
                 },
 
-              
+
                 "Hall1": {
                     "title": "Hall1",
                     "hfov": 110,
@@ -762,17 +546,11 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Hall2",
-                            "sceneId": "Hall2"
                         }
                     ]
                 },
 
-              
+
                 "Hall2": {
                     "title": "Hall2",
                     "hfov": 110,
@@ -800,12 +578,6 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "Laboratorio",
-                            "sceneId": "Laboratorio"
                         }
                     ]
                 },
@@ -837,16 +609,10 @@
                             "clickHandlerArgs": "1",
                             //"createTooltipFunc": hotspot,
                             //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
-                        },                        {
-                            "pitch": -1.23,
-                            "yaw": 150,
-                            "type": "scene",
-                            "text": "AulaMagna",
-                            "sceneId": "AulaMagna"
                         }
                     ]
                 },
-              
+
                 "AulaMagna": {
                     "title": "Aula Magna",
                     "hfov": 110,
@@ -875,10 +641,10 @@
         });
 
 
-
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover();
-    });
+        console.log(viewer.getConfig());
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
 
 
 
@@ -886,7 +652,6 @@
         var numeroRitrovamenti = 0;
 
         function showModal(args, i) {
-            console.log("EHI!");
             var tempI = i;
             $("#myModal").modal();
             addPoint(tempI);
@@ -898,26 +663,215 @@
             numeroRitrovamenti++;
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/17 SDGs!");
 
-            var bool = viewer.removeHotSpot(i,viewer.getScene());
-            
-            viewer.addHotSpot(
-                {                  
-                            "pitch": -0.6,
-                            "yaw": 37.1,
-                            "type": "scene",
-                            "text": "Hall1",
-                            "sceneId": "Hall1",
-                            "targetYaw": -23,
-                            "targetPitch": 2
-                });
+            var bool = viewer.removeHotSpot("1", viewer.getScene()); //
+            if (viewer.getScene() == "Esterno1") {
+                viewer.addHotSpot(
+                    {
 
-            // if (numeroRitrovamenti == 2) {
-            //     alert("Hai trovato tutti gli SDG!")
-            // }
+                        "pitch": 0,
+                        "yaw": 20,
+                        "type": "scene",
+                        "text": "Esterno2",
+                        "sceneId": "Esterno2"
+                    })
+            } else if (viewer.getScene() == "Esterno2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Aula1",
+                        "sceneId": "Aula1"
+                    })
+            } else if (viewer.getScene() == "Aula1") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Aula2",
+                        "sceneId": "Aula2"
+                    })
+            } else if (viewer.getScene() == "Aula2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Aula3",
+                        "sceneId": "Aula3"
+
+                    })
+            } else if (viewer.getScene() == "Aula3") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Aula4",
+                        "sceneId": "Aula4"
+                    })
+            } else if (viewer.getScene() == "Aula4") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Aula5",
+                        "sceneId": "Aula5"
+                    })
+            } else if (viewer.getScene() == "Aula5") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Balcone",
+                        "sceneId": "Balcone"
+                    })
+            } else if (viewer.getScene() == "Balcone") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Bar",
+                        "sceneId": "Bar"
+                    })
+            } else if (viewer.getScene() == "Bar") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Biblioteca",
+                        "sceneId": "Biblioteca"
+                    })
+            } else if (viewer.getScene() == "Biblioteca") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corridoio1",
+                        "sceneId": "Corridoio1"
+                    })
+            } else if (viewer.getScene() == "Corridoio1") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corridoio2",
+                        "sceneId": "Corridoio2"
+                    })
+            } else if (viewer.getScene() == "Corridoio2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corridoio3",
+                        "sceneId": "Corridoio3"
+                    })
+            } else if (viewer.getScene() == "Corridoio3") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corridoio4",
+                        "sceneId": "Corridoio4"
+                    })
+            } else if (viewer.getScene() == "Corridoio4") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corte1",
+                        "sceneId": "Corte1"
+                    })
+            } else if (viewer.getScene() == "Corte1") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Corte2",
+                        "sceneId": "Corte2"
+                    })
+            } else if (viewer.getScene() == "Corte2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Disi",
+                        "sceneId": "Disi"
+                    })
+            } else if (viewer.getScene() == "Disi") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Esterno2",
+                        "sceneId": "Esterno2"
+                    })
+            } else if (viewer.getScene() == "Disi") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Esterno2",
+                        "sceneId": "Esterno2"
+                    })
+            } else if (viewer.getScene() == "Esterno2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Hall1",
+                        "sceneId": "Hall1"
+                    })
+            } else if (viewer.getScene() == "Hall1") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Hall2",
+                        "sceneId": "Hall2"
+                    })
+            } else if (viewer.getScene() == "Hall2") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "Laboratorio",
+                        "sceneId": "Laboratorio"
+                    })
+            } else if (viewer.getScene() == "Laboratorio") {
+                viewer.addHotSpot(
+                    {
+                        "pitch": -1.23,
+                        "yaw": 150,
+                        "type": "scene",
+                        "text": "AulaMagna",
+                        "sceneId": "AulaMagna"
+                    });
+
+                // if (numeroRitrovamenti == 2) {
+                //     alert("Hai trovato tutti gli SDG!")
+                // }
+
+            }
 
         }
-
-
 
 
 
@@ -935,11 +889,11 @@
         var mixer;
         let fileAnimations;
         let clock = new THREE.Clock();
-        var renderer = new THREE.WebGLRenderer({alpha: true });
+        var renderer = new THREE.WebGLRenderer({ alpha: true });
 
         renderer.setSize(200, 200);
 
-        
+
 
         loader.load('3Dimg/2_goal.glb', function (gltf) {
             model = gltf.scene;
@@ -974,7 +928,7 @@
 
 
 
-        
+
         controls.update();
 
         function animate() {
@@ -993,7 +947,7 @@
 
 
 
-         
+
 
 
         // function sceneChangeListener() {
@@ -1002,20 +956,80 @@
 
         // };
 
-    function sceneLoadListener() {
-        // console.log("Load done");
-        //console.log(hotspotList);
-        var hotspotList = document.getElementsByClassName("currentGifDiv");
-        //Div on resize not possible or really difficult :(
-        //https://github.com/mpetroff/pannellum/issues/665
-        hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 10);
-        hotspotList[0].style.height = hotspotList[0].style.width;
-       
+        function sceneLoadListener() {
+            // console.log("Load done");
+            //console.log(hotspotList);
+            var hotspotList = document.getElementsByClassName("currentGifDiv");
+            //Div on resize not possible or really difficult :(
+            //https://github.com/mpetroff/pannellum/issues/665
+            hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 10);
+            hotspotList[0].style.height = hotspotList[0].style.width;
 
-        if (viewer.getScene() == "Esterno1") {
-            hotspotList[0].style.backgroundImage = "url('./img/SDGGif/1.gif')";
-        }
-    };
+
+            if (viewer.getScene() == "Aula1") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/1.gif')";
+            }
+            if (viewer.getScene() == "Aula2") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/2.gif')";
+            }
+            if (viewer.getScene() == "Aula3") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/3.gif')";
+            }
+            if (viewer.getScene() == "Aula4") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/4.gif')";
+            }
+            if (viewer.getScene() == "Aula5") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/5.gif')";
+            }
+            if (viewer.getScene() == "AulaMagna") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/6.gif')";
+            }
+            if (viewer.getScene() == "Balcone") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/7.gif')";
+            }
+            if (viewer.getScene() == "Bar") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/8.gif')";
+            }
+            if (viewer.getScene() == "Biblioteca") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/9.gif')";
+            }
+            if (viewer.getScene() == "Corridoio1") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/10.gif')";
+            }
+            if (viewer.getScene() == "Corridoio2") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/11.gif')";
+            }
+            if (viewer.getScene() == "Corridoio3") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/12.gif')";
+            }
+            if (viewer.getScene() == "Corridoio4") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/13.gif')";
+            }
+            if (viewer.getScene() == "Corte1") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/14.gif')";
+            }
+            if (viewer.getScene() == "Corte2") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/15.gif')";
+            }
+            if (viewer.getScene() == "Disi") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/16.gif')";
+            }
+            if (viewer.getScene() == "Esterno1") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
+            }
+             if (viewer.getScene() == "Esterno2") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
+            }
+             if (viewer.getScene() == "Hall1") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
+            }
+             if (viewer.getScene() == "Hall2") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
+            }
+             if (viewer.getScene() == "Laboratorio") {
+                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
+            }
+        };
 
         // viewer.on('scenechange', sceneChangeListener);
         viewer.on('load', sceneLoadListener);
