@@ -16,7 +16,7 @@
 <body>
     <video id="video" autoplay loop style="display:none">
         <source src="./video/1.mp4" type='video/mp4'>
-      </video>
+    </video>
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -64,7 +64,7 @@
     <script type="module">
 
         //********************************************Variables three.js*************************************************
-        
+
         import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
         import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
@@ -1151,7 +1151,13 @@
             }
         };
 
-        // viewer.on('scenechange', sceneChangeListener);
+
+
+        function sceneLoadListener() {
+            console.log("Load done");
+
+        };
+        viewer.on('scenechange', sceneChangeListener);
         viewer.on('load', sceneLoadListener);
 
 
