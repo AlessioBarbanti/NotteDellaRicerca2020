@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    <video id="video" autoplay loop style="display:none">
+        <source src="./video/1.mp4" type='video/mp4'>
+      </video>
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -61,7 +64,7 @@
     <script type="module">
 
         //********************************************Variables three.js*************************************************
-
+        
         import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
         import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
@@ -87,7 +90,7 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Esterno1",// "Esterno1",
+                "firstScene": "Aula3",// "Esterno1",
                 "sceneFadeDuration": 3000
             },
 
@@ -967,10 +970,15 @@
             if (viewer.getScene() == "Aula3") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/3.gif')";
                 document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                /*
                 loader.load('3Dimg/3_goal.glb', function (gltf) {
+                    
                     model = gltf.scene;
                     model.translateX(-2.35);
                     model.translateY(-2);
+                    video = document.getElementById( 'video' );
+                    videoTexture = new THREE.VideoTexture(video);
+                    model.
                     fileAnimations = gltf.animations;
                     mixer = new THREE.AnimationMixer(model);
                     for (i = 0; i < fileAnimations.length; i++) {
@@ -986,7 +994,12 @@
 
                     console.error(error);
 
-                });
+                });*/
+
+                const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                const cube = new THREE.Mesh(geometry, material);
+                scene.add(cube);
                 document.getElementById("div3D").appendChild(renderer.domElement);
 
             }

@@ -1,32 +1,53 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Homepage</title>
+  <title>My first Three.js app</title>
   <style>
-    body {
-      margin: 0;
-    }
-
     canvas {
-      display: block;
-    }
-
-    body {
-      background-image: url('http://www.cla.unibo.it/risorse/immagini/campus-cesena/@@images/5db1b590-d940-4f0c-8a1d-54688fb25e90.jpeg');
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-      background-color: #464646;
-
+      width: 100%;
+      height: 100%
     }
   </style>
 </head>
 
-<body>
+<body id = "body">
+  <video id="video" autoplay muted loop style="display:none">
+    <source src="./video/1.mp4" type='video/mp4'>
+  </video>
 
+  <script src="js/three.min.js"></script>
+  <script>
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
+    
+    const video = document.getElementById( 'video' );
+    video.preload = 'auto';
+    video.autoload = true;
+    video.load();
+    video.play();
+    const texture = new THREE.VideoTexture( video );
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+
+    var material = new THREE.MeshBasicMaterial({map: texture }); 
+    
+    var cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    camera.position.z = 1000;
+    function render() {
+      texture.needsUpdate;
+      requestAnimationFrame(render);
+      //cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
+    render();
+
+  </script>
 </body>
 
 </html>
