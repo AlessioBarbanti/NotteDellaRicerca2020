@@ -21,10 +21,22 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <div id="div3D"></div>
+                    <div class="text-center" id="div3D"></div>
                 </div>
-                <div class="modal-body">
-                    <p>Ingresso in *** sbloccato!</p>
+                <div id="descriptionDiv" class="modal-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error provident eligendi totam, labore,
+                        corporis iusto molestiae vitae harum nulla laborum aut eius quaerat aperiam? Inventore quasi
+                        pariatur velit ipsam ab! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint in rerum
+                        nihil quo. Atque debitis vitae maxime? Ad, necessitatibus neque perspiciatis numquam quibusdam
+                        nesciunt aperiam reiciendis. Laudantium asperiores rerum cum.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit eos exercitationem atque
+                        eligendi ipsam maxime vel
+                        eveniet veniam, mollitia, modi qui? Aut, maxime molestiae commodi quia harum nostrum
+                        reprehenderit? Quia! Lorem ipsum
+                        dolor sit amet consectetur adipisicing elit. Reprehenderit, qui provident nemo ducimus eius
+                        incidunt facilis neque illum
+                        voluptate eligendi esse, sit dignissimos dolorem. At laudantium tempore dolore? Beatae,
+                        repellendus!</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -48,7 +60,25 @@
 
     <script type="module">
 
+        //********************************************Variables three.js*************************************************
 
+        import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+
+        var axisHelper = new THREE.AxesHelper(100);
+        var model;
+        var wave;
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
+        var loader = new GLTFLoader();
+        var mixer;
+        var fileAnimations;
+        var clock = new THREE.Clock();
+        var renderer = new THREE.WebGLRenderer({ alpha: true });
+        var rendereDivDimension = window.innerHeight / 5;
+        renderer.setSize(rendereDivDimension, rendereDivDimension);
+        var i = 0;
 
         //***************************************************************PANNELLUM*************************************************************//
 
@@ -57,8 +87,8 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Aula3",// "Esterno1",
-                "sceneFadeDuration": 2000
+                "firstScene": "Esterno1",// "Esterno1",
+                "sceneFadeDuration": 3000
             },
 
             "scenes": {
@@ -79,8 +109,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -93,7 +123,7 @@
                     "hfov": 110,
                     "yaw": 5,
                     "type": "equirectangular",
-                    "panorama": "img/rooms/IngressoCampus.jpg",
+                    "panorama": "img/rooms/Esterno2.jpg",
                     "hotSpots": [
 
                         {
@@ -103,8 +133,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -123,8 +153,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -133,8 +163,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -153,8 +183,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                     ]
                 },
@@ -173,8 +203,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -193,8 +223,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
 
                     ]
@@ -215,8 +245,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -236,8 +266,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -257,8 +287,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -278,8 +308,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -299,8 +329,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -321,8 +351,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -331,8 +361,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -353,8 +383,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -375,8 +405,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -385,8 +415,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                     ]
                 },
@@ -407,8 +437,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -417,8 +447,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                     ]
                 },
@@ -438,8 +468,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -448,8 +478,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -469,8 +499,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -479,8 +509,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -502,8 +532,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -512,8 +542,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -534,8 +564,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -544,8 +574,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -566,8 +596,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -576,8 +606,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -597,8 +627,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         },
                         {
                             "pitch": -14.50,
@@ -607,8 +637,8 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-                            //"createTooltipFunc": hotspot,
-                            //"createTooltipArgs": "-- posso passare valori ad una funzione -- "
+
+
                         }
                     ]
                 },
@@ -663,7 +693,8 @@
             numeroRitrovamenti++;
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/17 SDGs!");
 
-            var bool = viewer.removeHotSpot("1", viewer.getScene()); //
+            viewer.removeHotSpot("1", viewer.getScene());
+
             if (viewer.getScene() == "Esterno1") {
                 viewer.addHotSpot(
                     {
@@ -875,92 +906,9 @@
 
 
 
-        //****************************************************************THREE.JS*************************************************************
-
-
-        import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-        import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-        let model;
-        let wave;
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
-        const loader = new GLTFLoader();
-        var mixer;
-        let fileAnimations;
-        let clock = new THREE.Clock();
-        var renderer = new THREE.WebGLRenderer({ alpha: true });
-
-        renderer.setSize(200, 200);
-
-
-
-        loader.load('3Dimg/2_goal.glb', function (gltf) {
-            model = gltf.scene;
-            model.rotation.x += 0.5;
-            fileAnimations = gltf.animations;
-            mixer = new THREE.AnimationMixer(model);
-            // console.log(gltf.animations);
-            mixer.clipAction(fileAnimations[0]).play();
-            mixer.clipAction(fileAnimations[1]).play();
-            mixer.clipAction(fileAnimations[2]).play();
-            scene.add(gltf.scene);
-
-        }, undefined, function (error) {
-
-            console.error(error);
-
-        });
-
-
-        camera.position.z = 3.5;
-        camera.position.y = 0.2;
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.1);
-        hemiLight.position.set(10, 20, 10);
-        scene.add(hemiLight);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(- 3, 10, - 10);
-        scene.add(dirLight);
-        const controls = new OrbitControls(camera, renderer.domElement);
-
-
-
-
-
-
-        controls.update();
-
-        function animate() {
-
-            requestAnimationFrame(animate);
-            if (mixer) {
-                model.rotation.y += 0.01;
-                mixer.update(clock.getDelta());
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-
-        }
-        animate();
-
-
-
-
-
-
-        // function sceneChangeListener() {
-        //     console.log("Scene changed");
-        //     console.log("Scene id: " + viewer.getScene());
-
-        // };
-
         function sceneLoadListener() {
-            // console.log("Load done");
-            //console.log(hotspotList);
             var hotspotList = document.getElementsByClassName("currentGifDiv");
-            //Div on resize not possible or really difficult :(
+            //Div resize on zoom not possible or really difficult :(
             //https://github.com/mpetroff/pannellum/issues/665
             hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 10);
             hotspotList[0].style.height = hotspotList[0].style.width;
@@ -968,24 +916,183 @@
 
             if (viewer.getScene() == "Aula1") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/1.gif')";
+                loader.load('3Dimg/1_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Aula2") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/2.gif')";
+                loader.load('3Dimg/2_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Aula3") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/3.gif')";
+                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                loader.load('3Dimg/3_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Aula4") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/4.gif')";
+                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                loader.load('3Dimg/4_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Aula5") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/5.gif')";
+                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                loader.load('3Dimg/5_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "AulaMagna") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/6.gif')";
+                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                loader.load('3Dimg/6_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Balcone") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/7.gif')";
+                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
+                loader.load('3Dimg/7_goal.glb', function (gltf) {
+                    model = gltf.scene;
+                    model.translateX(-2.35);
+                    model.translateY(-2);
+                    fileAnimations = gltf.animations;
+                    mixer = new THREE.AnimationMixer(model);
+                    for (i = 0; i < fileAnimations.length; i++) {
+                        mixer.clipAction(gltf.animations[i]).play();
+                    }
+                    scene.add(gltf.scene);
+                    scene.add(axisHelper);
+                    camera.position.z = 10; //ok
+                    camera.position.y = 0;
+                    camera.position.x = 0;
+
+                }, undefined, function (error) {
+
+                    console.error(error);
+
+                });
+                document.getElementById("div3D").appendChild(renderer.domElement);
+
             }
             if (viewer.getScene() == "Bar") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/8.gif')";
@@ -1017,16 +1124,16 @@
             if (viewer.getScene() == "Esterno1") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
             }
-             if (viewer.getScene() == "Esterno2") {
+            if (viewer.getScene() == "Esterno2") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
             }
-             if (viewer.getScene() == "Hall1") {
+            if (viewer.getScene() == "Hall1") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
             }
-             if (viewer.getScene() == "Hall2") {
+            if (viewer.getScene() == "Hall2") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
             }
-             if (viewer.getScene() == "Laboratorio") {
+            if (viewer.getScene() == "Laboratorio") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/17.gif')";
             }
         };
@@ -1034,6 +1141,49 @@
         // viewer.on('scenechange', sceneChangeListener);
         viewer.on('load', sceneLoadListener);
 
+
+
+
+        //****************************************************************THREE.JS*************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.1);
+        hemiLight.position.set(10, 20, 10);
+        scene.add(hemiLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(- 3, 10, - 10);
+        scene.add(dirLight);
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+
+
+
+
+        controls.update();
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+            if (mixer) {
+                mixer.update(clock.getDelta());
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+
+        }
+        animate();
 
     </script>
 
