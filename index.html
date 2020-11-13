@@ -90,7 +90,7 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Aula3",// "Esterno1",
+                "firstScene": "Corridoio3",// "Esterno1",
                 "sceneFadeDuration": 3000
             },
 
@@ -1151,12 +1151,15 @@
             }
         };
 
-
-
-        function sceneLoadListener() {
-            console.log("Load done");
-
-        };
+        function sceneChangeListener(){
+            console.log("current scene: "+ viewer.getScene());
+        }
+        
+        //aggiugnere sopra update della texture
+        // function sceneLoadListener() {
+        //     console.log("Load done");
+        //     //fai update della texture con .needsupdate
+        // };
         viewer.on('scenechange', sceneChangeListener);
         viewer.on('load', sceneLoadListener);
 
