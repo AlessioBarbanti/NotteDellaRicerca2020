@@ -14,9 +14,13 @@
 </head>
 
 <body>
-    <video id="video" autoplay loop style="display:none">
+    <video id="video" autoplay loop muted style="display:none">
         <source src="./video/1.mp4" type='video/mp4'>
     </video>
+
+
+
+
 
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -65,23 +69,45 @@
 
         //********************************************Variables three.js*************************************************
 
-        import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-        import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+            // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+            import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+            var scene = new THREE.Scene();
+            var renderer = new THREE.WebGLRenderer({ alpha: true });
+            var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            const controls = new OrbitControls(camera, renderer.domElement);
+            var rendereDivDimension = window.innerHeight / 7;
+            renderer.setSize(rendereDivDimension, rendereDivDimension);
+            renderer.render(scene, camera);
+            var video;
+            var texture;
+            var material;
+            var grabbing;
+            var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
+            var cube = new THREE.Mesh(geometry, material);
+            material = new THREE.MeshBasicMaterial({ map: texture });
+            grabbing = 0;
+
+            scene.add(cube);
+            camera.position.z = 1000;
+            var i = 0;
 
 
-        var axisHelper = new THREE.AxesHelper(100);
-        var model;
-        var wave;
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
-        var loader = new GLTFLoader();
-        var mixer;
-        var fileAnimations;
-        var clock = new THREE.Clock();
-        var renderer = new THREE.WebGLRenderer({ alpha: true });
-        var rendereDivDimension = window.innerHeight / 5;
-        renderer.setSize(rendereDivDimension, rendereDivDimension);
-        var i = 0;
+//render cube
+
+            function render() {
+                    requestAnimationFrame(render);
+                    controls.addEventListener("start", function grab() { grabbing = 1 }, false);
+                    controls.addEventListener("end", function release() { grabbing = 0 }, false);
+
+                    if (!grabbing) {
+                        cube.rotation.y += 0.01;
+                    }
+
+                    renderer.render(scene, camera);
+                };
+                render();
+
 
         //***************************************************************PANNELLUM*************************************************************//
 
@@ -90,7 +116,7 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Aula4",// "Esterno1",
+                "firstScene": "Aula1",// "Esterno1",
                 "sceneFadeDuration": 3000
             },
 
@@ -910,6 +936,9 @@
 
 
         function sceneLoadListener() {
+
+
+
             var hotspotList = document.getElementsByClassName("currentGifDiv");
             //Div resize on zoom not possible or really difficult :(
             //https://github.com/mpetroff/pannellum/issues/665
@@ -918,194 +947,60 @@
 
 
             if (viewer.getScene() == "Aula1") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/1.gif')";
-                loader.load('3Dimg/1_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
 
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
+                document.getElementById("video").innerHTML = "<source src='./video/2.mp4' type='video/mp4'>";    
+                video = document.getElementById('video');
+                video.preload = 'auto';
+                video.autoload = true;
+                video.load();
+                video.play();
+                cube.material.map = new THREE.VideoTexture(video);
+                cube.material.map.minFilter = THREE.LinearFilter;
+                cube.material.map.magFilter = THREE.LinearFilter;
+                cube.material.needsUpdate = true;
+                hotspotList[0].appendChild(renderer.domElement);
+                  
             }
-            if (viewer.getScene() == "Aula2") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/2.gif')";
-                loader.load('3Dimg/2_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
-            }
-            if (viewer.getScene() == "Aula3") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/3.gif')";
-                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
-                /*
-                loader.load('3Dimg/3_goal.glb', function (gltf) {
                     
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    video = document.getElementById( 'video' );
-                    videoTexture = new THREE.VideoTexture(video);
-                    model.
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });*/
-
-                const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-                const cube = new THREE.Mesh(geometry, material);
-                scene.add(cube);
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
+            if (viewer.getScene() == "Aula2") {
+                
+                document.getElementById("video").innerHTML = "<source src='./video/3.mp4' type='video/mp4'>";    
+                video = document.getElementById('video');
+                video.preload = 'auto';
+                video.autoload = true;
+                video.load();
+                video.play();
+                cube.material.map = new THREE.VideoTexture(video);
+                cube.material.map.minFilter = THREE.LinearFilter;
+                cube.material.map.magFilter = THREE.LinearFilter;
+                cube.material.needsUpdate = true;
+                hotspotList[0].appendChild(renderer.domElement);
+                  
             }
+
+            if (viewer.getScene() == "Aula3") {
+                
+                document.getElementById("video").innerHTML = "<source src='./video/4.mp4' type='video/mp4'>";    
+                video = document.getElementById('video');
+                video.preload = 'auto';
+                video.autoload = true;
+                video.load();
+                video.play();
+                cube.material.map = new THREE.VideoTexture(video);
+                cube.material.map.minFilter = THREE.LinearFilter;
+                cube.material.map.magFilter = THREE.LinearFilter;
+                cube.material.needsUpdate = true;
+                hotspotList[0].appendChild(renderer.domElement);
+                  
+            }
+
             if (viewer.getScene() == "Aula4") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/4.gif')";
-                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
-                loader.load('3Dimg/4_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
             }
             if (viewer.getScene() == "Aula5") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/5.gif')";
-                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
-                loader.load('3Dimg/5_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
             }
             if (viewer.getScene() == "AulaMagna") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/6.gif')";
-                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
-                loader.load('3Dimg/6_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
             }
             if (viewer.getScene() == "Balcone") {
-                hotspotList[0].style.backgroundImage = "url('./img/SDGGif/7.gif')";
-                document.getElementById("descriptionDiv").innerHTML = "**Testo Modificato con descrizione adatta**";
-                loader.load('3Dimg/7_goal.glb', function (gltf) {
-                    model = gltf.scene;
-                    model.translateX(-2.35);
-                    model.translateY(-2);
-                    fileAnimations = gltf.animations;
-                    mixer = new THREE.AnimationMixer(model);
-                    for (i = 0; i < fileAnimations.length; i++) {
-                        mixer.clipAction(gltf.animations[i]).play();
-                    }
-                    scene.add(gltf.scene);
-                    scene.add(axisHelper);
-                    camera.position.z = 10; //ok
-                    camera.position.y = 0;
-                    camera.position.x = 0;
-
-                }, undefined, function (error) {
-
-                    console.error(error);
-
-                });
-                document.getElementById("div3D").appendChild(renderer.domElement);
-
             }
             if (viewer.getScene() == "Bar") {
                 hotspotList[0].style.backgroundImage = "url('./img/SDGGif/8.gif')";
@@ -1151,61 +1046,19 @@
             }
         };
 
-        function sceneChangeListener(){
-            console.log("current scene: "+ viewer.getScene());
-        }
+        // function sceneChangeListener(){
+        //     console.log("current scene: "+ viewer.getScene());
+        // }
         
         //aggiugnere sopra update della texture
         // function sceneLoadListener() {
         //     console.log("Load done");
         //     //fai update della texture con .needsupdate
         // };
-        viewer.on('scenechange', sceneChangeListener);
+        //        viewer.on('scenechange', sceneChangeListener);
+
         viewer.on('load', sceneLoadListener);
 
-
-
-
-        //****************************************************************THREE.JS*************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.1);
-        hemiLight.position.set(10, 20, 10);
-        scene.add(hemiLight);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(- 3, 10, - 10);
-        scene.add(dirLight);
-        const controls = new OrbitControls(camera, renderer.domElement);
-
-
-
-
-
-        controls.update();
-
-        function animate() {
-
-            requestAnimationFrame(animate);
-            if (mixer) {
-                mixer.update(clock.getDelta());
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-
-        }
-        animate();
 
     </script>
 

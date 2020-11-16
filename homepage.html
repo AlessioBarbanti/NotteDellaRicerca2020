@@ -11,12 +11,12 @@
 </head>
 
 <body id="body">
-  <video id="video" autoplay muted loop style="display:none">
-    <source src="./video/1.mp4" type='video/mp4'>
-  </video>
-  <video id="video2" autoplay muted loop style="display:none">
-    <source src="./video/2.mp4" type='video/mp4'>
-  </video>
+    <video id="video" autoplay muted loop style="display:none">
+      <source src="./video/1.mp4" type='video/mp4'>
+    </video>
+    <video id="video2" autoplay muted loop style="display:none">
+      <source src="./video/2.mp4" type='video/mp4'>
+    </video>
 
   <div id="Div3D"></div>
 
@@ -28,28 +28,20 @@
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    var camera2 = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    var renderer1 = new THREE.WebGLRenderer({ alpha: true });
-    var renderer2 = new THREE.WebGLRenderer();
-    renderer1.setSize(window.innerWidth / 10, window.innerHeight / 10);
-    renderer2.setSize(window.innerWidth / 2, window.innerHeight / 2);
+    var renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth / 10, window.innerHeight / 10);
 
-    const controls = new OrbitControls(camera2, renderer2.domElement);
-    document.getElementById("Div3D").appendChild(renderer1.domElement);
-    document.body.appendChild(renderer2.domElement);
+    const control = new OrbitControls(camera, renderer.domElement);
+    document.getElementById("Div3D").appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
 
     var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
 
     const video = document.getElementById('video');
-    const video2 = document.getElementById('video2');
     video.preload = 'auto';
     video.autoload = true;
     video.load();
     video.play();
-    video2.preload = 'auto';
-    video2.autoload = true;
-    video2.load();
-    video2.play();
 
     var texture = new THREE.VideoTexture(video);
     texture.minFilter = THREE.LinearFilter;
@@ -61,12 +53,12 @@
     var cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
     camera.position.z = 1000;
-    camera2.position.z = 1000;
+
+
     function render() {
       requestAnimationFrame(render);
-      //cube.rotation.x += 0.01;
-      controls.addEventListener("start", function grab() { grabbing = 1 }, false);
-      controls.addEventListener("end", function release() { grabbing = 0 }, false);
+      control.addEventListener("start", function grab() { grabbing = 1 }, false);
+      control.addEventListener("end", function release() { grabbing = 0 }, false);
       if (!grabbing) {
         cube.rotation.y += 0.01;
       } else {
@@ -75,8 +67,7 @@
         cube.material.map.magFilter = THREE.LinearFilter;
         cube.material.needsUpdate = true;
       }
-      renderer1.render(scene, camera);
-      renderer2.render(scene, camera2);
+      renderer.render(scene, camera);
     };
     render();
 
