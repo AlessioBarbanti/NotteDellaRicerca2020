@@ -2,7 +2,7 @@
 <meta charset="UTF-16">
 
 <head>
-    <title> NotteDellaRicerca2020 </title>
+    <title> Notte Della Ricerca 2020 </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" href="index.css" />
-    <!-- TODO OBBLIGARE IL LANDSCAPE-->
 </head>
 
 <body>
@@ -76,8 +75,8 @@
         var renderer = new THREE.WebGLRenderer({ alpha: true });
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
-        var rendereDivDimension = window.innerHeight / 7;
-        renderer.setSize(rendereDivDimension, rendereDivDimension);
+        var rendererDivDimension = window.innerHeight / 7;
+        renderer.setSize(rendererDivDimension, rendererDivDimension);
         renderer.render(scene, camera);
         var video;
         var texture;
@@ -89,7 +88,7 @@
         grabbing = 0;
 
         scene.add(cube);
-        camera.position.z = 1000;
+        camera.position.z = 800;
         var i = 0;
 
 
@@ -116,7 +115,7 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Biblioteca",
+                "firstScene": "Esterno1",
                 "sceneFadeDuration": 1000
             },
 
@@ -777,6 +776,10 @@
         function showModal(args, i) {
             var tempI = i;
             $("#myModal").modal();
+            // document.getElementById("div3D").style.width = (document.getElementById('panorama').clientHeight / 4);
+            // document.getElementById("div3D").style.height = document.getElementById("div3D").style.width;
+            renderer.setSize(rendererDivDimension*3, rendererDivDimension*3);
+            document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
         }
 
@@ -1035,7 +1038,7 @@
             //Div resize on zoom not possible or really difficult :(
             //https://github.com/mpetroff/pannellum/issues/665
             if (hotspotList.length > 0) {
-                hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 10);
+                hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 8);
                 hotspotList[0].style.height = hotspotList[0].style.width;
             }
 
