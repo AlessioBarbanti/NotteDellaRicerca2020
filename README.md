@@ -13,5 +13,5 @@ TODO
 
 
 Map
-![alt text](https://i.imgur.com/gh4yiON.jpg)
+![map](https://i.imgur.com/gh4yiON.jpg)
 
