@@ -73,7 +73,7 @@
 
         var scene = new THREE.Scene();
         var renderer = new THREE.WebGLRenderer({ alpha: true });
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+        var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
         var rendererDivDimension = window.innerHeight / 7;
         renderer.setSize(rendererDivDimension, rendererDivDimension);
@@ -88,7 +88,9 @@
         grabbing = 0;
 
         scene.add(cube);
-        camera.position.z = 800;
+        camera.position.z = 1000;
+        controls.enablePan = false;
+        controls.saveState();
         var i = 0;
 
 
@@ -774,11 +776,11 @@
         var numeroRitrovamenti = 0;
 
         function showModal(args, i) {
+            console.log("hey!");
             var tempI = i;
+            controls.enabled = true;
             $("#myModal").modal();
-            // document.getElementById("div3D").style.width = (document.getElementById('panorama').clientHeight / 4);
-            // document.getElementById("div3D").style.height = document.getElementById("div3D").style.width;
-            renderer.setSize(rendererDivDimension*3, rendererDivDimension*3);
+            renderer.setSize(rendererDivDimension * 3, rendererDivDimension * 3);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
         }
@@ -1005,7 +1007,7 @@
                     });
                 viewer.removeHotSpot("2", "Corridoio2");
 
-                // if (numeroRitrovamenti == 2) {
+                // if (numeroRitrovamenti == 17) {
                 //     alert("Hai trovato tutti gli SDG!")
                 // }
 
@@ -1026,11 +1028,12 @@
             cube.material.map.minFilter = THREE.LinearFilter;
             cube.material.map.magFilter = THREE.LinearFilter;
             cube.material.needsUpdate = true;
-
         };
 
         function sceneLoadListener() {
-
+            controls.reset();
+            controls.enabled = false;
+            renderer.setSize(rendererDivDimension, rendererDivDimension);
 
 
             var hotspotList = document.getElementsByClassName("currentGifDiv");
