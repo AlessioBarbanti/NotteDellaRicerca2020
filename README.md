@@ -9,7 +9,9 @@ TODO
 - fix 3D icon placement (Or remove it?)
 - change modal color base on gif color 
 - remove inventario / add progress bar (?)
-- caricare dinamicamente i files onSceneChanges
 - add progression bar in corridors
 
+
+Map
+![alt text](https://imgur.com/a/PYmJri4)
 
