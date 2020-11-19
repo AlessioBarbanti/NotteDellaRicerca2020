@@ -1,79 +1,62 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>HomePage</title>
-  <style>
-    canvas {
-      width: 100%;
-      height: 100%
-    }
-  </style>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
 </head>
+<style>
+  html, body{
+    height: 100%;
+  }
+  .modal-xl {
+    width: 90%;
+   max-width:1200px;
+  }
+</style>
+<body style="
+background-image: url('./img/homepage/BgHomepage.png'); 
+height: 100%;
+background-repeat: no-repeat;
+background-size: cover;">
 
-<body id="body">
-    <video id="video" autoplay muted loop style="display:none">
-      <source src="./video/1.mp4" type='video/mp4'>
-    </video>
-    <video id="video2" autoplay muted loop style="display:none">
-      <source src="./video/2.mp4" type='video/mp4'>
-    </video>
+<!-- Modal -->
+<div class="modal right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalPreviewLabel"><img class="img-fluid mx-auto" src="./img/homepage/logoSdg.png" alt=""></h5>
 
-  <div id="Div3D"></div>
-
-  <script src="js/three.min.js"></script>
-
-  <script type="module">
-
-    import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    var renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth / 10, window.innerHeight / 10);
-
-    const control = new OrbitControls(camera, renderer.domElement);
-    document.getElementById("Div3D").appendChild(renderer.domElement);
-    document.body.appendChild(renderer.domElement);
-
-    var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
-
-    const video = document.getElementById('video');
-    video.preload = 'auto';
-    video.autoload = true;
-    video.load();
-    video.play();
-
-    var texture = new THREE.VideoTexture(video);
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    var grabbing = 0;
-
-    var cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-    camera.position.z = 1000;
-
-
-    function render() {
-      requestAnimationFrame(render);
-      control.addEventListener("start", function grab() { grabbing = 1 }, false);
-      control.addEventListener("end", function release() { grabbing = 0 }, false);
-      if (!grabbing) {
-        cube.rotation.y += 0.01;
-      } else {
-        cube.material.map = new THREE.VideoTexture(video2);
-        cube.material.map.minFilter = THREE.LinearFilter;
-        cube.material.map.magFilter = THREE.LinearFilter;
-        cube.material.needsUpdate = true;
-      }
-      renderer.render(scene, camera);
-    };
-    render();
-
-
-
-  </script>
+      </div>
+      <div class="modal-body">
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque deleniti illum quos blanditiis totam velit labore ipsum laborum facere dicta quod a est unde aliquid magnam architecto, numquam eaque consequatur? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium earum aperiam ratione repudiandae quos, labore sunt id vitae autem voluptates quod. Qui alias iste, tempore voluptatem amet explicabo laborum Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque, aspernatur repudiandae corrupti expedita veniam quod molestias magni tenetur maiores beatae nobis nihil quia accusamus odio nemo hic quibusdam! Ex, provident?
+    </div>
+    <div class="modal-footer">
+      <img class="img-fluid mx-auto" width="30%" src="./img/homepage/logoUnibo.png" alt="">    </div>
+  </div>
+</div>
+<!-- Modal -->
 </body>
 
+<script> 
+
+$( document ).ready(function() {
+  $("#exampleModalPreview").modal({backdrop: false});
+  $("#exampleModalPreview").modal("show");
+});
+
+</script>
 </html>
