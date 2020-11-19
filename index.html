@@ -16,7 +16,9 @@
     <video id="video" autoplay loop muted style="display:none">
         <source src="./video/1.mp4" type='video/mp4'>
     </video>
-
+    <audio id="audio">
+        <source src="./Audio/VictoryFanfare.mp3" type="audio/mp3">
+      </audio>
 
 
 
@@ -45,7 +47,7 @@
                         repellendus!</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                    <button type="button" id = "okButton" class="btn btn-default" data-dismiss="modal">OK</button>
                 </div>
             </div>
 
@@ -66,6 +68,11 @@
 
     <script type="module">
 
+        document.getElementById("okButton").onclick = function() {checkVictory()};
+        
+        var audio = document.getElementById("audio");
+        audio.volume = 0.1;
+        audio.preload='auto';
         //********************************************Variables three.js*************************************************
 
         // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
@@ -76,7 +83,9 @@
         var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
         var rendererDivDimension = window.innerHeight / 7;
+        var rendererBiggerDivDimension = rendererDivDimension*3
         renderer.setSize(rendererDivDimension, rendererDivDimension);
+
         renderer.render(scene, camera);
         var video;
         var texture;
@@ -88,7 +97,7 @@
         grabbing = 0;
 
         scene.add(cube);
-        camera.position.z = 1000;
+        camera.position.z = 900;
         controls.enablePan = false;
         controls.saveState();
         var i = 0;
@@ -117,7 +126,7 @@
             "hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Esterno1",
+                "firstScene": "Hall2",
                 "sceneFadeDuration": 1000
             },
 
@@ -185,8 +194,6 @@
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
                             "clickHandlerArgs": "1",
-
-
                         }
                     ]
                 },
@@ -606,6 +613,14 @@
                             "type": "scene",
                             "text": "Balcone",
                             "sceneId": "Balcone"
+                        },
+                        {
+                            "pitch": -14.50,
+                            "yaw": -147.95,
+                            "cssClass": "currentGifDiv",
+                            "id": "1",
+                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerArgs": "1",
                         }
 
                     ]
@@ -666,14 +681,6 @@
                     "hotSpots": [
                         {
                             "pitch": 0,
-                            "yaw": 142,
-                            "id": "1",
-                            "type": "scene",
-                            "text": "Uscita",
-                            "sceneId": "Uscita"
-                        },
-                        {
-                            "pitch": 0,
                             "yaw": -82,
                             "type": "scene",
                             "id": "2",
@@ -706,8 +713,8 @@
                     "hotSpots": [
 
                         {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
+                            "pitch": 0,
+                            "yaw": -114,
                             "cssClass": "currentGifDiv",
                             "id": "1",
                             "clickHandlerFunc": showModal, //onclick function
@@ -776,22 +783,32 @@
         var numeroRitrovamenti = 0;
 
         function showModal(args, i) {
-            console.log("hey!");
             var tempI = i;
             controls.enabled = true;
-            $("#myModal").modal();
-            renderer.setSize(rendererDivDimension * 3, rendererDivDimension * 3);
+            renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
+            console.log(numeroRitrovamenti);
+            $("#myModal").modal();
         }
 
+function checkVictory(){
+    if(numeroRitrovamenti == 1){
+        alert("Hai trovato tutti gli sdg!");
+        audio.play();
+        viewer.loadScene("Uscita", 0, -114, 120);
+    }
+}
 
         function addPoint(i) {
 
             numeroRitrovamenti++;
+
             document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/17 SDGs!");
 
+            if(viewer.getScene() != "Uscita"){
             viewer.removeHotSpot("1", viewer.getScene());
+            }
 
             if (viewer.getScene() == "Esterno1") {
                 viewer.addHotSpot(
@@ -821,9 +838,7 @@
                         "text": "Hall2",
                         "sceneId": "Hall2"
                     })
-            }
-
-            else if (viewer.getScene() == "AulaMagna") {
+            } else if (viewer.getScene() == "AulaMagna") {
                 viewer.addHotSpot(
                     {
                         "pitch": 5,
@@ -833,16 +848,9 @@
                         "sceneId": "Hall2"
                     });
                 viewer.removeHotSpot("2", "Hall2");
+
             } else if (viewer.getScene() == "Uscita") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 76,
-                        "type": "scene",
-                        "text": "Hall2",
-                        "sceneId": "Hall2"
-                    });
-                viewer.removeHotSpot("1", "Hall2");
+                //do nothing
             }
 
             else if (viewer.getScene() == "Aula1") {
@@ -920,32 +928,11 @@
                 viewer.removeHotSpot("1", "Corte2");
 
             } else if (viewer.getScene() == "Corridoio1") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio2",
-                        "sceneId": "Corridoio2"
-                    })
+                //do nothing
             } else if (viewer.getScene() == "Corridoio2") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio3",
-                        "sceneId": "Corridoio3"
-                    })
+                //do nothing
             } else if (viewer.getScene() == "Corridoio3") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio4",
-                        "sceneId": "Corridoio4"
-                    })
+                // do nothing
             } else if (viewer.getScene() == "Corridoio4") {
                 // do nothing
             } else if (viewer.getScene() == "Corte1") {
@@ -960,14 +947,7 @@
                 viewer.removeHotSpot("2", "Corte2");
 
             } else if (viewer.getScene() == "Corte2") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Disi",
-                        "sceneId": "Disi"
-                    })
+                // do nothing
             } else if (viewer.getScene() == "Disi") {
                 viewer.addHotSpot(
                     {
@@ -1006,11 +986,6 @@
                         "sceneId": "Corridoio2"
                     });
                 viewer.removeHotSpot("2", "Corridoio2");
-
-                // if (numeroRitrovamenti == 17) {
-                //     alert("Hai trovato tutti gli SDG!")
-                // }
-
             }
 
         }
@@ -1029,6 +1004,10 @@
             cube.material.map.magFilter = THREE.LinearFilter;
             cube.material.needsUpdate = true;
         };
+        function loadDescription(desc){
+            document.getElementById("descriptionDiv").innerHTML = "<p>" + desc + "</p>";
+        }
+
 
         function sceneLoadListener() {
             controls.reset();
@@ -1043,83 +1022,100 @@
             if (hotspotList.length > 0) {
                 hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 8);
                 hotspotList[0].style.height = hotspotList[0].style.width;
-            }
-
-            if (viewer.getScene() == "Esterno1") {
-                loadVideo("1.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Esterno2") {
-                loadVideo("2.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Hall1") {
-                loadVideo("3.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
 
 
-            if (viewer.getScene() == "Aula1") {
+                if (viewer.getScene() == "Esterno1") {
+                    loadVideo("1.mp4");
+                    loadDescription("Test Description1!");
+                    
+                }
+                if (viewer.getScene() == "Esterno2") {
+                    loadVideo("2.mp4");
+                    loadDescription("Test Description2!");
 
-                loadVideo("4.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
+                }
+                if (viewer.getScene() == "Hall1") {
+                    loadVideo("3.mp4");
+                    loadDescription("Test Description3!");
 
-            if (viewer.getScene() == "Aula2") {
-                loadVideo("5.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
+                }
+                if (viewer.getScene() == "Aula1") {
+                    loadVideo("4.mp4");
+                    loadDescription("Test Description4!");
+                }
+                if (viewer.getScene() == "Aula2") {
+                    loadVideo("5.mp4");
+                                        loadDescription("Test Description5!");
 
-            }
+                }
+                if (viewer.getScene() == "Aula3") {
+                    loadVideo("6.mp4");
+                    loadDescription("Test Description6!");
 
-            if (viewer.getScene() == "Aula3") {
-                loadVideo("6.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
+                }
+                if (viewer.getScene() == "Aula4") {
+                    loadVideo("7.mp4");
+                    loadDescription("Test Description7!");
 
-            if (viewer.getScene() == "Aula4") {
-                loadVideo("7.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Aula5") {
-                loadVideo("8.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "AulaMagna") {
-                loadVideo("9.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Balcone") {
-                loadVideo("10.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Bar") {
-                loadVideo("11.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Biblioteca") {
-                loadVideo("12.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Corridoio1") {
-                loadVideo("13.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
+                }
+                if (viewer.getScene() == "Aula5") {
+                    loadVideo("8.mp4");
+                    loadDescription("Test Description8!");
 
-            if (viewer.getScene() == "Corte1") {
-                loadVideo("14.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Disi") {
-                loadVideo("15.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
+                }
+                if (viewer.getScene() == "AulaMagna") {
+                    loadVideo("9.mp4");
+                    loadDescription("Test Description9!");
+                }
+                if (viewer.getScene() == "Balcone") {
+                    loadVideo("10.mp4");
+                    loadDescription("Test Description10!");
 
-            if (viewer.getScene() == "Uscita") {
-                loadVideo("16.mp4");
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-            if (viewer.getScene() == "Laboratorio") {
-                loadVideo("17.mp4");
+                }
+                if (viewer.getScene() == "Bar") {
+                    loadVideo("11.mp4");
+                    loadDescription("Test Description11!");
+
+                }
+                if (viewer.getScene() == "Biblioteca") {
+                    loadVideo("12.mp4");
+                    loadDescription("Test Description12!");
+v
+                }
+                if (viewer.getScene() == "Corridoio1") {
+                    loadVideo("13.mp4");
+                    loadDescription("Test Description13!");
+v
+                }
+                if (viewer.getScene() == "Corte1") {
+                    loadVideo("14.mp4");
+                    loadDescription("Test Description14!");
+
+                }
+                if (viewer.getScene() == "Disi") {
+                    loadVideo("15.mp4");
+                    loadDescription("Test Description15!");
+
+                }
+                if (viewer.getScene() == "Corte2") {
+                    loadVideo("16.mp4");
+                    loadDescription("Test Description16!");
+
+                }
+                if (viewer.getScene() == "Laboratorio") {
+                    loadVideo("17.mp4");
+                    loadDescription("Test Description17!");
+
+                }
+                if (viewer.getScene() == "Uscita") {
+                    loadVideo("finale.mp4");
+                    loadDescription("Test Description18!");
+                    //last animated image must be bigger
+                    hotspotList[0].style.width = rendererBiggerDivDimension;
+                    hotspotList[0].style.height = hotspotList[0].style.width;
+                    renderer.setSize( rendererBiggerDivDimension,  rendererBiggerDivDimension);
+                }
+
                 hotspotList[0].appendChild(renderer.domElement);
             }
         };
