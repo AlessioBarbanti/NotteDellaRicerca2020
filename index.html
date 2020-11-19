@@ -73,6 +73,8 @@
 
         var scene = new THREE.Scene();
         var renderer = new THREE.WebGLRenderer({ alpha: true });
+        var rendererBackgroundColor = "0xa2a0a5";
+        renderer.setClearColor( 0xa2a0a5, 0 )
         var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
         var rendererDivDimension = window.innerHeight / 7;
@@ -90,7 +92,7 @@
         grabbing = 0;
 
         scene.add(cube);
-        camera.position.z = 900;
+        camera.position.z = 1000;
         controls.enablePan = false;
         controls.saveState();
         var i = 0;
@@ -769,6 +771,7 @@
         var SdgFound = 0;
 
         function showModal(args, i) {
+            renderer.setClearColor(0xa2a0a5, 0.1 )
             var tempI = i;
             controls.enabled = true;
             renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
@@ -779,6 +782,7 @@
         }
 
         function checkVictory() {
+            renderer.setClearColor( 0xa2a0a5, 0 )
             // if(viewer.getScene() == "Uscita"){
             //     alert("dummy test, i'm going to another page!");
             // } else
