@@ -65,8 +65,8 @@
         audio.volume = 0.1;
         audio.preload = 'auto';
         var ldbar = new ldBar("#progressBar");
-        var totalSdgNumberToFind = 5;
-    
+        var totalSdgNumberToFind = 1;
+
         //********************************************Variables three.js*************************************************
 
         import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
@@ -774,12 +774,16 @@
             renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
-            $("#myModal").modal();
+            $("#myModal").modal({ backdrop: 'static', keyboard: false });
+
         }
 
         function checkVictory() {
+            // if(viewer.getScene() == "Uscita"){
+            //     alert("dummy test, i'm going to another page!");
+            // } else
             if (SdgFound == totalSdgNumberToFind) {
-                alert("Hai trovato tutti gli sdg!");
+                alert("Complimenti! Hai trovato tutti gli sdg!");
                 audio.play();
                 viewer.loadScene("Uscita", 0, -114, 120);
             }
@@ -789,11 +793,13 @@
 
             SdgFound++;
             ldbar.set(SdgFound * 100 / 17);
-            
+
 
             if (viewer.getScene() != "Uscita") {
-                console.log(viewer.getScene() != "Uscita");
+                console.log("hotspot rimosso");
                 viewer.removeHotSpot("1", viewer.getScene());
+            } else {
+                console.log("hotspot non rimosso");
             }
 
             if (viewer.getScene() == "Esterno1") {
@@ -1063,12 +1069,10 @@
                 if (viewer.getScene() == "Biblioteca") {
                     loadVideo("12.mp4");
                     loadDescription("Test Description12!");
-                    v
                 }
                 if (viewer.getScene() == "Corridoio1") {
                     loadVideo("13.mp4");
                     loadDescription("Test Description13!");
-                    v
                 }
                 if (viewer.getScene() == "Corte1") {
                     loadVideo("14.mp4");
@@ -1093,6 +1097,7 @@
                 if (viewer.getScene() == "Uscita") {
                     loadVideo("finale.mp4");
                     loadDescription("Test Description18!");
+                    document.getElementById("okButton").remove();
                     //last animated image must be bigger
                     hotspotList[0].style.width = rendererBiggerDivDimension;
                     hotspotList[0].style.height = hotspotList[0].style.width;
