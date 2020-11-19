@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link rel="stylesheet" type="text/css" href="./js/loading-bar.min.css" />
+    <script type="text/javascript" src="./js/loading-bar.min.js"></script>
     <link rel="stylesheet" href="index.css" />
 </head>
 
@@ -18,7 +19,7 @@
     </video>
     <audio id="audio">
         <source src="./Audio/VictoryFanfare.mp3" type="audio/mp3">
-      </audio>
+    </audio>
 
 
 
@@ -32,22 +33,10 @@
                     <div class="text-center" id="div3D"></div>
                 </div>
                 <div id="descriptionDiv" class="modal-body">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error provident eligendi totam, labore,
-                        corporis iusto molestiae vitae harum nulla laborum aut eius quaerat aperiam? Inventore quasi
-                        pariatur velit ipsam ab! Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint in rerum
-                        nihil quo. Atque debitis vitae maxime? Ad, necessitatibus neque perspiciatis numquam quibusdam
-                        nesciunt aperiam reiciendis. Laudantium asperiores rerum cum.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit eos exercitationem atque
-                        eligendi ipsam maxime vel
-                        eveniet veniam, mollitia, modi qui? Aut, maxime molestiae commodi quia harum nostrum
-                        reprehenderit? Quia! Lorem ipsum
-                        dolor sit amet consectetur adipisicing elit. Reprehenderit, qui provident nemo ducimus eius
-                        incidunt facilis neque illum
-                        voluptate eligendi esse, sit dignissimos dolorem. At laudantium tempore dolore? Beatae,
-                        repellendus!</p>
+                    <p>Lorem ipsum</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id = "okButton" class="btn btn-default" data-dismiss="modal">OK</button>
+                    <button type="button" id="okButton" class="btn btn-default" data-dismiss="modal">OK</button>
                 </div>
             </div>
 
@@ -56,8 +45,10 @@
 
     <div id="panorama">
         <div id="controls">
-            <button id="ciao" type="button" class="btn btn-lg btn-danger ctrl" data-toggle="popover" title="Inventario"
-                data-placement="top" data-content="Fino ad ora hai raccolto 0/23 SDGs">Inventario</button>
+            <div id="progressBar" data-value="0" data-fill-background-extrude="1" class="ldBar label-center"
+                style="margin: 0 auto;" data-type="fill" data-img="./img/ProgBar.svg"></div>
+            <!-- <button id="ciao" type="button" class="btn btn-lg btn-danger ctrl" data-toggle="popover" title="Inventario"
+                data-placement="top" data-content="Fino ad ora hai raccolto 0/23 SDGs">Inventario</button> -->
         </div>
     </div>
 
@@ -68,14 +59,16 @@
 
     <script type="module">
 
-        document.getElementById("okButton").onclick = function() {checkVictory()};
-        
+        document.getElementById("okButton").onclick = function () { checkVictory() };
+
         var audio = document.getElementById("audio");
         audio.volume = 0.1;
-        audio.preload='auto';
+        audio.preload = 'auto';
+        var ldbar = new ldBar("#progressBar");
+        var totalSdgNumberToFind = 5;
+    
         //********************************************Variables three.js*************************************************
 
-        // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
         import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
         var scene = new THREE.Scene();
@@ -83,7 +76,7 @@
         var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
         var rendererDivDimension = window.innerHeight / 7;
-        var rendererBiggerDivDimension = rendererDivDimension*3
+        var rendererBiggerDivDimension = rendererDivDimension * 3
         renderer.setSize(rendererDivDimension, rendererDivDimension);
 
         renderer.render(scene, camera);
@@ -548,9 +541,7 @@
                             "type": "scene",
                             "id": "2",
                             "text": "Bar",
-                            "sceneId": "Bar",
-                            "targetYaw": 107,
-                            "targetPitch": 4
+                            "sceneId": "Bar"
                         }
                     ]
                 },
@@ -773,14 +764,9 @@
         });
 
 
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-
-
 
         //Gestione punti
-        var numeroRitrovamenti = 0;
+        var SdgFound = 0;
 
         function showModal(args, i) {
             var tempI = i;
@@ -788,26 +774,26 @@
             renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
-            console.log(numeroRitrovamenti);
             $("#myModal").modal();
         }
 
-function checkVictory(){
-    if(numeroRitrovamenti == 1){
-        alert("Hai trovato tutti gli sdg!");
-        audio.play();
-        viewer.loadScene("Uscita", 0, -114, 120);
-    }
-}
+        function checkVictory() {
+            if (SdgFound == totalSdgNumberToFind) {
+                alert("Hai trovato tutti gli sdg!");
+                audio.play();
+                viewer.loadScene("Uscita", 0, -114, 120);
+            }
+        }
 
         function addPoint(i) {
 
-            numeroRitrovamenti++;
+            SdgFound++;
+            ldbar.set(SdgFound * 100 / 17);
+            
 
-            document.getElementById("ciao").setAttribute('data-content', "Attualmente hai trovato " + numeroRitrovamenti + "/17 SDGs!");
-
-            if(viewer.getScene() != "Uscita"){
-            viewer.removeHotSpot("1", viewer.getScene());
+            if (viewer.getScene() != "Uscita") {
+                console.log(viewer.getScene() != "Uscita");
+                viewer.removeHotSpot("1", viewer.getScene());
             }
 
             if (viewer.getScene() == "Esterno1") {
@@ -910,13 +896,13 @@ function checkVictory(){
             } else if (viewer.getScene() == "Bar") {
                 viewer.addHotSpot(
                     {
-                        "pitch": -1.23,
-                        "yaw": 150,
+                        "pitch": -1,
+                        "yaw": -23.5,
                         "type": "scene",
                         "text": "Corridoio4",
                         "sceneId": "Corridoio4"
                     });
-                viewer.removeHotSpot("2", Corridoio4);
+                viewer.removeHotSpot("2", "Corridoio4");
             } else if (viewer.getScene() == "Biblioteca") {
                 viewer.addHotSpot({
                     "pitch": -3.66,
@@ -993,7 +979,6 @@ function checkVictory(){
         function loadVideo(videoName) {
             let currentVideo = videoName;
             document.getElementById("video").innerHTML = "<source src='./video/" + currentVideo + "' type='video/mp4'>";
-            console.log(document.getElementById("video").innerHTML);
             video = document.getElementById('video');
             video.preload = 'auto';
             video.autoload = true;
@@ -1004,7 +989,7 @@ function checkVictory(){
             cube.material.map.magFilter = THREE.LinearFilter;
             cube.material.needsUpdate = true;
         };
-        function loadDescription(desc){
+        function loadDescription(desc) {
             document.getElementById("descriptionDiv").innerHTML = "<p>" + desc + "</p>";
         }
 
@@ -1013,8 +998,6 @@ function checkVictory(){
             controls.reset();
             controls.enabled = false;
             renderer.setSize(rendererDivDimension, rendererDivDimension);
-
-
             var hotspotList = document.getElementsByClassName("currentGifDiv");
 
             //Div resize on zoom not possible or really difficult :(
@@ -1027,7 +1010,7 @@ function checkVictory(){
                 if (viewer.getScene() == "Esterno1") {
                     loadVideo("1.mp4");
                     loadDescription("Test Description1!");
-                    
+
                 }
                 if (viewer.getScene() == "Esterno2") {
                     loadVideo("2.mp4");
@@ -1045,7 +1028,7 @@ function checkVictory(){
                 }
                 if (viewer.getScene() == "Aula2") {
                     loadVideo("5.mp4");
-                                        loadDescription("Test Description5!");
+                    loadDescription("Test Description5!");
 
                 }
                 if (viewer.getScene() == "Aula3") {
@@ -1080,12 +1063,12 @@ function checkVictory(){
                 if (viewer.getScene() == "Biblioteca") {
                     loadVideo("12.mp4");
                     loadDescription("Test Description12!");
-v
+                    v
                 }
                 if (viewer.getScene() == "Corridoio1") {
                     loadVideo("13.mp4");
                     loadDescription("Test Description13!");
-v
+                    v
                 }
                 if (viewer.getScene() == "Corte1") {
                     loadVideo("14.mp4");
@@ -1113,7 +1096,7 @@ v
                     //last animated image must be bigger
                     hotspotList[0].style.width = rendererBiggerDivDimension;
                     hotspotList[0].style.height = hotspotList[0].style.width;
-                    renderer.setSize( rendererBiggerDivDimension,  rendererBiggerDivDimension);
+                    renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
                 }
 
                 hotspotList[0].appendChild(renderer.domElement);
