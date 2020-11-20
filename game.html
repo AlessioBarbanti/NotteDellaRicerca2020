@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" type="text/css" href="./js/loading-bar.min.css" />
     <script type="text/javascript" src="./js/loading-bar.min.js"></script>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="game.css" />
 </head>
 
 <body>
@@ -33,7 +33,7 @@
                     <div class="text-center" id="div3D"></div>
                 </div>
                 <div id="descriptionDiv" class="modal-body">
-                    <p>Lorem ipsum</p>
+                    <p></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="okButton" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -47,8 +47,6 @@
         <div id="controls">
             <div id="progressBar" data-value="0" data-fill-background-extrude="1" class="ldBar label-center"
                 style="margin: 0 auto;" data-type="fill" data-img="./img/ProgBar.svg"></div>
-            <!-- <button id="ciao" type="button" class="btn btn-lg btn-danger ctrl" data-toggle="popover" title="Inventario"
-                data-placement="top" data-content="Fino ad ora hai raccolto 0/23 SDGs">Inventario</button> -->
         </div>
     </div>
 
@@ -58,6 +56,8 @@
 
 
     <script type="module">
+
+
         document.getElementById("okButton").onclick = function () {
             checkVictory()
         };
