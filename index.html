@@ -58,23 +58,30 @@
 
 
     <script type="module">
-
-        document.getElementById("okButton").onclick = function () { checkVictory() };
+        document.getElementById("okButton").onclick = function () {
+            checkVictory()
+        };
 
         var audio = document.getElementById("audio");
         audio.volume = 0.1;
         audio.preload = 'auto';
         var ldbar = new ldBar("#progressBar");
-        var totalSdgNumberToFind = 1;
+        var SdgFound = 0;
+        var totalSdgNumberToFind = 4;
 
         //********************************************Variables three.js*************************************************
 
-        import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+        import {
+            OrbitControls
+        } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
         var scene = new THREE.Scene();
-        var renderer = new THREE.WebGLRenderer({ alpha: true });
-        var rendererBackgroundColor = "0xa2a0a5";
-        renderer.setClearColor( 0xa2a0a5, 0 )
+        
+        var renderer = new THREE.WebGLRenderer({
+            alpha: true
+        });
+        var bgRendererColor = 0xa2a0a5;
+        renderer.setClearColor(bgRendererColor, 0)
         var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
         const controls = new OrbitControls(camera, renderer.domElement);
         var rendererDivDimension = window.innerHeight / 7;
@@ -88,7 +95,9 @@
         var grabbing;
         var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
         var cube = new THREE.Mesh(geometry, material);
-        material = new THREE.MeshBasicMaterial({ map: texture });
+        material = new THREE.MeshBasicMaterial({
+            map: texture
+        });
         grabbing = 0;
 
         scene.add(cube);
@@ -102,8 +111,12 @@
 
         function render() {
             requestAnimationFrame(render);
-            controls.addEventListener("start", function grab() { grabbing = 1 }, false);
-            controls.addEventListener("end", function release() { grabbing = 0 }, false);
+            controls.addEventListener("start", function grab() {
+                grabbing = 1
+            }, false);
+            controls.addEventListener("end", function release() {
+                grabbing = 0
+            }, false);
 
             if (!grabbing) {
                 cube.rotation.y += 0.005;
@@ -118,11 +131,11 @@
 
 
         var viewer = pannellum.viewer('panorama', {
-            "hotSpotDebug": true,
+            //"hotSpotDebug": true,
             "autoLoad": true,
             "default": {
-                "firstScene": "Hall2",
-                "sceneFadeDuration": 1000
+                "firstScene": "Esterno1",
+                "sceneFadeDuration": 2000
             },
 
             "scenes": {
@@ -130,8 +143,8 @@
 
                 "Esterno1": {
                     "title": "Esterno1",
-                    "pitch": 0,
-                    "yaw": 0,
+                    "pitch": -3,
+                    "yaw": -124.95,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Esterno1.jpg",
                     "hotSpots": [
@@ -141,7 +154,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -165,7 +178,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -187,7 +200,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
                         }
                     ]
@@ -205,7 +218,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -225,7 +238,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -245,7 +258,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -267,7 +280,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -288,7 +301,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -326,7 +339,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -347,7 +360,7 @@
                             "yaw": -204,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -368,7 +381,7 @@
                             "yaw": 13,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -463,8 +476,7 @@
                     "yaw": 5,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Corridoio3.jpg",
-                    "hotSpots": [
-                        {
+                    "hotSpots": [{
                             "pitch": -3.89,
                             "yaw": -67.53,
                             "type": "scene",
@@ -510,8 +522,7 @@
                     "yaw": 5,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Corridoio4.jpg",
-                    "hotSpots": [
-                        {
+                    "hotSpots": [{
                             "pitch": -3.65,
                             "yaw": 339,
                             "type": "scene",
@@ -562,7 +573,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
                         }
                     ]
@@ -574,8 +585,7 @@
                     "yaw": 5,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Corte2.jpg",
-                    "hotSpots": [
-                        {
+                    "hotSpots": [{
                             "pitch": -2,
                             "yaw": 58,
                             "type": "scene",
@@ -612,7 +622,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
                         }
 
@@ -632,7 +642,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -655,7 +665,7 @@
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -671,8 +681,7 @@
                     "yaw": 5,
                     "type": "equirectangular",
                     "panorama": "img/rooms/Hall2.jpg",
-                    "hotSpots": [
-                        {
+                    "hotSpots": [{
                             "pitch": 0,
                             "yaw": -82,
                             "type": "scene",
@@ -710,7 +719,7 @@
                             "yaw": -114,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1"
                         }
                     ]
@@ -729,7 +738,7 @@
                             "yaw": -301,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -743,13 +752,12 @@
                     "yaw": 5,
                     "type": "equirectangular",
                     "panorama": "img/rooms/AulaMagna.jpg",
-                    "hotSpots": [
-                        {
+                    "hotSpots": [{
                             "pitch": -14.50,
                             "yaw": -147.95,
                             "cssClass": "currentGifDiv",
                             "id": "1",
-                            "clickHandlerFunc": showModal, //onclick function
+                            "clickHandlerFunc": showModal,
                             "clickHandlerArgs": "1",
 
 
@@ -768,21 +776,23 @@
 
 
         //Gestione punti
-        var SdgFound = 0;
 
         function showModal(args, i) {
-            renderer.setClearColor(0xa2a0a5, 0.1 )
+            renderer.setClearColor(bgRendererColor, 0.15)
             var tempI = i;
             controls.enabled = true;
             renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
-            $("#myModal").modal({ backdrop: 'static', keyboard: false });
+            $("#myModal").modal({
+                backdrop: 'static',
+                keyboard: false
+            });
 
         }
 
         function checkVictory() {
-            renderer.setClearColor( 0xa2a0a5, 0 )
+            renderer.setClearColor(bgRendererColor, 0)
             // if(viewer.getScene() == "Uscita"){
             //     alert("dummy test, i'm going to another page!");
             // } else
@@ -800,118 +810,102 @@
 
 
             if (viewer.getScene() != "Uscita") {
-                console.log("hotspot rimosso");
                 viewer.removeHotSpot("1", viewer.getScene());
-            } else {
-                console.log("hotspot non rimosso");
             }
 
             if (viewer.getScene() == "Esterno1") {
-                viewer.addHotSpot(
-                    {
+                viewer.addHotSpot({
 
-                        "pitch": 0,
-                        "yaw": 151,
-                        "type": "scene",
-                        "text": "Esterno2",
-                        "sceneId": "Esterno2"
-                    })
+                    "pitch": 0,
+                    "yaw": 151,
+                    "type": "scene",
+                    "text": "Esterno2",
+                    "sceneId": "Esterno2"
+                })
             } else if (viewer.getScene() == "Esterno2") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 20,
-                        "type": "scene",
-                        "text": "Hall1",
-                        "sceneId": "Hall1"
-                    })
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 20,
+                    "type": "scene",
+                    "text": "Hall1",
+                    "sceneId": "Hall1"
+                })
             } else if (viewer.getScene() == "Hall1") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": 0,
-                        "yaw": -300,
-                        "type": "scene",
-                        "text": "Hall2",
-                        "sceneId": "Hall2"
-                    })
+                viewer.addHotSpot({
+                    "pitch": 0,
+                    "yaw": -300,
+                    "type": "scene",
+                    "text": "Hall2",
+                    "sceneId": "Hall2"
+                })
             } else if (viewer.getScene() == "AulaMagna") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": 5,
-                        "yaw": -350,
-                        "type": "scene",
-                        "text": "Hall2",
-                        "sceneId": "Hall2"
-                    });
+                viewer.addHotSpot({
+                    "pitch": 5,
+                    "yaw": -350,
+                    "type": "scene",
+                    "text": "Hall2",
+                    "sceneId": "Hall2"
+                });
                 viewer.removeHotSpot("2", "Hall2");
 
             } else if (viewer.getScene() == "Uscita") {
                 //do nothing
-            }
-
-            else if (viewer.getScene() == "Aula1") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio2",
-                        "sceneId": "Corridoio2"
-                    });
+            } else if (viewer.getScene() == "Aula1") {
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Corridoio2",
+                    "sceneId": "Corridoio2"
+                });
                 viewer.removeHotSpot("1", "Corridoio2");
 
             } else if (viewer.getScene() == "Aula2") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio2",
-                        "sceneId": "Corridoio2"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Corridoio2",
+                    "sceneId": "Corridoio2"
+                });
                 viewer.removeHotSpot("3", "Corridoio2");
 
-            }
-            else if (viewer.getScene() == "Aula3") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": 0,
-                        "yaw": -306,
-                        "type": "scene",
-                        "text": "Corridoio3",
-                        "sceneId": "Corridoio3"
-                    });
+            } else if (viewer.getScene() == "Aula3") {
+                viewer.addHotSpot({
+                    "pitch": 0,
+                    "yaw": -306,
+                    "type": "scene",
+                    "text": "Corridoio3",
+                    "sceneId": "Corridoio3"
+                });
                 viewer.removeHotSpot("2", "Corridoio3");
             } else if (viewer.getScene() == "Aula4") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio4",
-                        "sceneId": "Corridoio4"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Corridoio4",
+                    "sceneId": "Corridoio4"
+                });
                 viewer.removeHotSpot("1", "Corridoio4");
 
             } else if (viewer.getScene() == "Aula5") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -4.72,
-                        "yaw": -47,
-                        "type": "scene",
-                        "text": "Corridoio3",
-                        "sceneId": "Corridoio3"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -4.72,
+                    "yaw": -47,
+                    "type": "scene",
+                    "text": "Corridoio3",
+                    "sceneId": "Corridoio3"
+                });
                 viewer.removeHotSpot("3", "Corridoio3")
             } else if (viewer.getScene() == "Bar") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1,
-                        "yaw": -23.5,
-                        "type": "scene",
-                        "text": "Corridoio4",
-                        "sceneId": "Corridoio4"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -1,
+                    "yaw": -23.5,
+                    "type": "scene",
+                    "text": "Corridoio4",
+                    "sceneId": "Corridoio4"
+                });
                 viewer.removeHotSpot("2", "Corridoio4");
             } else if (viewer.getScene() == "Biblioteca") {
                 viewer.addHotSpot({
@@ -932,55 +926,50 @@
             } else if (viewer.getScene() == "Corridoio4") {
                 // do nothing
             } else if (viewer.getScene() == "Corte1") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corte2",
-                        "sceneId": "Corte2"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Corte2",
+                    "sceneId": "Corte2"
+                });
                 viewer.removeHotSpot("2", "Corte2");
 
             } else if (viewer.getScene() == "Corte2") {
                 // do nothing
             } else if (viewer.getScene() == "Disi") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -0.86,
-                        "yaw": -154,
-                        "type": "scene",
-                        "text": "Corridoio3",
-                        "sceneId": "Corridoio3"
-                    })
+                viewer.addHotSpot({
+                    "pitch": -0.86,
+                    "yaw": -154,
+                    "type": "scene",
+                    "text": "Corridoio3",
+                    "sceneId": "Corridoio3"
+                })
                 viewer.removeHotSpot("1", "Corridoio3");
             } else if (viewer.getScene() == "Esterno2") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Hall1",
-                        "sceneId": "Hall1"
-                    })
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Hall1",
+                    "sceneId": "Hall1"
+                })
             } else if (viewer.getScene() == "Hall1") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Hall2",
-                        "sceneId": "Hall2"
-                    })
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Hall2",
+                    "sceneId": "Hall2"
+                })
             } else if (viewer.getScene() == "Laboratorio") {
-                viewer.addHotSpot(
-                    {
-                        "pitch": -1.23,
-                        "yaw": 150,
-                        "type": "scene",
-                        "text": "Corridoio2",
-                        "sceneId": "Corridoio2"
-                    });
+                viewer.addHotSpot({
+                    "pitch": -1.23,
+                    "yaw": 150,
+                    "type": "scene",
+                    "text": "Corridoio2",
+                    "sceneId": "Corridoio2"
+                });
                 viewer.removeHotSpot("2", "Corridoio2");
             }
 
@@ -999,6 +988,7 @@
             cube.material.map.magFilter = THREE.LinearFilter;
             cube.material.needsUpdate = true;
         };
+
         function loadDescription(desc) {
             document.getElementById("descriptionDiv").innerHTML = "<p>" + desc + "</p>";
         }
@@ -1113,8 +1103,6 @@
         };
 
         viewer.on('load', sceneLoadListener);
-
-
     </script>
 
 </body>
