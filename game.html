@@ -24,7 +24,7 @@
 
 
 
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="mainModal" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -74,19 +74,25 @@
         } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
         var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
+        camera.position.z = 1000;
 
+        var bgRendererColor = 0xa2a0a5;
+        var rendererDivDimension = window.innerHeight / 7;
+        var rendererBiggerDivDimension = rendererDivDimension * 3
         var renderer = new THREE.WebGLRenderer({
             alpha: true
         });
-        var bgRendererColor = 0xa2a0a5;
-        renderer.setClearColor(bgRendererColor, 0)
-        var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
-        const controls = new OrbitControls(camera, renderer.domElement);
-        var rendererDivDimension = window.innerHeight / 7;
-        var rendererBiggerDivDimension = rendererDivDimension * 3
-        renderer.setSize(rendererDivDimension, rendererDivDimension);
 
+        renderer.setClearColor(bgRendererColor, 0)
+        renderer.setSize(rendererDivDimension, rendererDivDimension);
         renderer.render(scene, camera);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enablePan = false;
+        controls.saveState();
+
+        //Cube vars
         var video;
         var texture;
         var material;
@@ -99,10 +105,7 @@
         grabbing = 0;
 
         scene.add(cube);
-        camera.position.z = 1000;
-        controls.enablePan = false;
-        controls.saveState();
-        var i = 0;
+
 
 
         //render cube
@@ -119,7 +122,6 @@
             if (!grabbing) {
                 cube.rotation.y += 0.005;
             }
-
             renderer.render(scene, camera);
         };
         render();
@@ -773,7 +775,6 @@
 
 
 
-        //Gestione punti
 
         function showModal(args, i) {
             renderer.setClearColor(bgRendererColor, 0.15)
@@ -782,7 +783,7 @@
             renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
             document.getElementById("div3D").appendChild(renderer.domElement);
             addPoint(tempI);
-            $("#myModal").modal({
+            $("#mainModal").modal({
                 backdrop: 'static',
                 keyboard: false
             });
@@ -1089,7 +1090,7 @@
                 if (viewer.getScene() == "Uscita") {
                     loadVideo("finale.mp4");
                     loadDescription(
-                        "Test Description18! <a href='./index.html'>Restart</a> <br><a href='./dummy.html'>Google</a>"
+                        "Test Description18! <br> <a href='./index.html'>Restart</a> <br> <a href='./dummy.html'>Google</a>"
                         );
                     document.getElementById("okButton").remove();
                     //last animated image must be bigger
