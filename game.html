@@ -56,8 +56,6 @@
 
 
     <script type="module">
-
-
         document.getElementById("okButton").onclick = function () {
             checkVictory()
         };
@@ -67,7 +65,7 @@
         audio.preload = 'auto';
         var ldbar = new ldBar("#progressBar");
         var SdgFound = 0;
-        var totalSdgNumberToFind = 4;
+        var totalSdgNumberToFind = 1;
 
         //********************************************Variables three.js*************************************************
 
@@ -76,7 +74,7 @@
         } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
 
         var scene = new THREE.Scene();
-        
+
         var renderer = new THREE.WebGLRenderer({
             alpha: true
         });
@@ -1090,7 +1088,9 @@
                 }
                 if (viewer.getScene() == "Uscita") {
                     loadVideo("finale.mp4");
-                    loadDescription("Test Description18!");
+                    loadDescription(
+                        "Test Description18! <a href='./index.html'>Restart</a> <br><a href='./dummy.html'>Google</a>"
+                        );
                     document.getElementById("okButton").remove();
                     //last animated image must be bigger
                     hotspotList[0].style.width = rendererBiggerDivDimension;
