@@ -34,8 +34,6 @@
 
             let oTop = e.pageY - $('.active').offset().top;
             let oLeft = e.pageX - $('.active').offset().left;
-            console.log("oTop = " + oTop);
-            console.log("oLeft = " + oLeft);
             $(this).parents().on('mousemove', function (e) {
 
                 $('.active').offset({
@@ -146,7 +144,7 @@ $( "#resetMap").click(function() {
 
 
     var viewer = pannellum.viewer('panorama', {
-        "hotSpotDebug": true,
+        //"hotSpotDebug": true,
         "autoLoad": true,
         "default": {
             "firstScene": "Esterno1",
