@@ -76,3 +76,8 @@ div.myModal:hover span:after {
     z-index: 2;
     height: 5em;
 }
+
+.ldBar-label:after {
+     /* change from % to USD */
+     content: "/17";
+  }

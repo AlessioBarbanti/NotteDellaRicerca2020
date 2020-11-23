@@ -77,9 +77,10 @@ $( "#resetMap").click(function() {
     var audio = document.getElementById("audio");
     audio.volume = 0.1;
     audio.preload = 'auto';
-    var ldbar = new ldBar("#progressBar");
+    
     var SdgFound = 0;
-    var totalSdgNumberToFind = 3;
+    var totalSdgNumberToFind = 17;
+    var ldbar = new ldBar("#progressBar",{"max" : totalSdgNumberToFind});
 
     //********************************************Variables three.js*************************************************
 
@@ -819,7 +820,8 @@ $( "#resetMap").click(function() {
     function addPoint(i) {
 
         SdgFound++;
-        ldbar.set(SdgFound * 100 / 17);
+        
+        ldbar.set(SdgFound);
 
 
         if (viewer.getScene() != "Uscita") {
