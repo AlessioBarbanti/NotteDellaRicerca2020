@@ -5,13 +5,1120 @@
     <title> Notte Della Ricerca 2020 </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
     <link rel="stylesheet" type="text/css" href="./js/loading-bar.min.css" />
     <script type="text/javascript" src="./js/loading-bar.min.js"></script>
     <link rel="stylesheet" href="game.css" />
+    <script src="js/three.js"></script>
 </head>
+
+<script type="module">
+
+    function isMobile() {
+        try {
+            document.createEvent("TouchEvent");
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    if (!isMobile()) {
+
+        $('#mapDiv').on('mousedown', function (e) {
+
+            $(this).addClass('active');
+
+            let oTop = e.pageY - $('.active').offset().top;
+            let oLeft = e.pageX - $('.active').offset().left;
+            console.log("oTop = " + oTop);
+            console.log("oLeft = " + oLeft);
+            $(this).parents().on('mousemove', function (e) {
+
+                $('.active').offset({
+
+                    top: e.pageY - oTop,
+                    left: e.pageX - oLeft
+
+                });
+
+            });
+
+            $(this).on('mouseup', function () {
+
+                $(this).removeClass('active');
+
+            });
+
+            return false;
+        });
+
+
+    } else {
+        document.getElementsByClassName("modal-body")[0].style.overflow = "scroll";
+    }
+
+
+$( "#resetMap").click(function() {
+
+    document.getElementById("mapDiv").style.left = 0;
+    document.getElementById("mapDiv").style.top = 0;
+    
+});
+
+
+    document.getElementById("okButton").onclick = function () {
+        checkVictory()
+    };
+
+    var audio = document.getElementById("audio");
+    audio.volume = 0.1;
+    audio.preload = 'auto';
+    var ldbar = new ldBar("#progressBar");
+    var SdgFound = 0;
+    var totalSdgNumberToFind = 3;
+
+    //********************************************Variables three.js*************************************************
+
+    import {
+        OrbitControls
+    } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
+    camera.position.z = 1000;
+
+    var bgRendererColor = 0xa2a0a5;
+    var rendererDivDimension = window.innerHeight / 7;
+    var rendererBiggerDivDimension = rendererDivDimension * 3
+    var renderer = new THREE.WebGLRenderer({
+        alpha: true
+    });
+
+    renderer.setClearColor(bgRendererColor, 0)
+    renderer.setSize(rendererDivDimension, rendererDivDimension);
+    renderer.render(scene, camera);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false;
+    controls.saveState();
+
+    //Cube vars
+    var video;
+    var texture;
+    var material;
+    var grabbing;
+    var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
+    var cube = new THREE.Mesh(geometry, material);
+    material = new THREE.MeshBasicMaterial({
+        map: texture
+    });
+    grabbing = 0;
+
+    scene.add(cube);
+
+
+
+    //render cube
+
+    function render() {
+        requestAnimationFrame(render);
+        controls.addEventListener("start", function grab() {
+            grabbing = 1
+        }, false);
+        controls.addEventListener("end", function release() {
+            grabbing = 0
+        }, false);
+
+        if (!grabbing) {
+            cube.rotation.y += 0.005;
+        }
+        renderer.render(scene, camera);
+    };
+    render();
+
+
+    //***************************************************************PANNELLUM*************************************************************//
+
+
+    var viewer = pannellum.viewer('panorama', {
+        "hotSpotDebug": true,
+        "autoLoad": true,
+        "default": {
+            "firstScene": "Esterno1",
+            "sceneFadeDuration": 2000
+        },
+
+        "scenes": {
+
+
+            "Esterno1": {
+                "title": "Esterno1",
+                "pitch": 0,
+                "yaw": -230,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Esterno1.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+
+
+
+            "Esterno2": {
+                "title": "Esterno2",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Esterno2.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+
+            "Aula1": {
+                "title": "Aula1",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Aula1.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+                    }
+                ]
+            },
+            "Aula2": {
+                "title": "Aula2",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Aula2.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    },
+                ]
+            },
+            "Aula3": {
+                "title": "Aula3",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Aula3.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+            "Aula4": {
+                "title": "Aula4",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Aula4.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    },
+
+                ]
+            },
+
+            "Aula5": {
+                "title": "Aula5",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Aula5.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+            "Balcone": {
+                "title": "Balcone",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Balcone.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    },
+                    {
+                        "pitch": -2.88,
+                        "yaw": -171.57,
+                        "type": "scene",
+                        "text": "Hall2",
+                        "sceneId": "Hall2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    }, {
+                        "pitch": -14,
+                        "yaw": 21,
+                        "type": "scene",
+                        "text": "Corte2",
+                        "sceneId": "Corte2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                ]
+            },
+
+            "Bar": {
+                "title": "Bar",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Bar.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+            "Biblioteca": {
+                "title": "Biblioteca",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Biblioteca.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -8.75,
+                        "yaw": -204,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+            "Corridoio1": {
+                "title": "Corridoio1",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corridoio1.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -4,
+                        "yaw": 13,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    },
+                    {
+                        "pitch": -2.57,
+                        "yaw": 134,
+                        "type": "scene",
+                        "text": "Corridoio3",
+                        "sceneId": "Corridoio3",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": 262,
+                        "type": "scene",
+                        "text": "Corridoio2",
+                        "sceneId": "Corridoio2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    }
+                ]
+            },
+
+
+            "Corridoio2": {
+                "title": "Corridoio2",
+                "id": "Corridoio2",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corridoio2.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -1.6,
+                        "yaw": -346,
+                        "type": "scene",
+                        "text": "Corte2",
+                        "sceneId": "Corte2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -2.8,
+                        "yaw": -164.63,
+                        "type": "scene",
+                        "text": "Corridoio1",
+                        "sceneId": "Corridoio1",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -4.6,
+                        "yaw": -192,
+                        "type": "scene",
+                        "text": "Aula1",
+                        "id": "1",
+                        "sceneId": "Aula1",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -3,
+                        "yaw": -283,
+                        "type": "scene",
+                        "text": "Laboratorio",
+                        "id": "2",
+                        "sceneId": "Laboratorio",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -5,
+                        "yaw": -131.23,
+                        "type": "scene",
+                        "id": "3",
+                        "text": "Aula2",
+                        "sceneId": "Aula2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    }
+                ]
+            },
+
+
+            "Corridoio3": {
+                "title": "Corridoio3",
+                "id": "Corridoio3",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corridoio3.jpg",
+                "hotSpots": [{
+                        "pitch": -3.89,
+                        "yaw": -67.53,
+                        "type": "scene",
+                        "text": "Corridoio1",
+                        "sceneId": "Corridoio1"
+                    },
+                    {
+                        "pitch": -3,
+                        "yaw": -250,
+                        "type": "scene",
+                        "text": "Corridoio4",
+                        "sceneId": "Corridoio4"
+                    }, {
+                        "pitch": -6.78,
+                        "yaw": -127,
+                        "id": "1",
+                        "type": "scene",
+                        "text": "Disi",
+                        "sceneId": "Disi"
+                    }, {
+                        "pitch": -5.92,
+                        "yaw": -200,
+                        "type": "scene",
+                        "id": "2",
+                        "text": "Aula3",
+                        "sceneId": "Aula3"
+                    }, {
+                        "pitch": -5,
+                        "yaw": -331,
+                        "type": "scene",
+                        "id": "3",
+                        "text": "Aula5",
+                        "sceneId": "Aula5"
+                    },
+                ]
+            },
+
+
+            "Corridoio4": {
+                "title": "Corridoio4",
+                "id": "Corridoio4",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corridoio4.jpg",
+                "hotSpots": [{
+                        "pitch": -3.65,
+                        "yaw": 339,
+                        "type": "scene",
+                        "text": "Corridoio3",
+                        "sceneId": "Corridoio3",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -2.5,
+                        "yaw": 248,
+                        "type": "scene",
+                        "text": "Hall2",
+                        "sceneId": "Hall2",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": -6.78,
+                        "yaw": 71.71,
+                        "type": "scene",
+                        "id": "1",
+                        "text": "Aula4",
+                        "sceneId": "Aula4"
+                    },
+                    {
+                        "pitch": -1.43,
+                        "yaw": -91.86,
+                        "type": "scene",
+                        "id": "2",
+                        "text": "Bar",
+                        "sceneId": "Bar"
+                    }
+                ]
+            },
+
+
+            "Corte1": {
+                "title": "Corte1",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corte1.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+                    }
+                ]
+            },
+
+            "Corte2": {
+                "title": "Corte2",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Corte2.jpg",
+                "hotSpots": [{
+                        "pitch": -2,
+                        "yaw": 58,
+                        "type": "scene",
+                        "id": "1",
+                        "text": "Biblioteca",
+                        "sceneId": "Biblioteca",
+                        "targetYaw": 107,
+                        "targetPitch": 4
+                    },
+                    {
+                        "pitch": 3,
+                        "yaw": -139.33,
+                        "type": "scene",
+                        "id": "2",
+                        "text": "Corte1",
+                        "sceneId": "Corte1"
+                    },
+                    {
+                        "pitch": -2,
+                        "yaw": -38,
+                        "type": "scene",
+                        "text": "Corridoio2",
+                        "sceneId": "Corridoio2"
+                    },
+                    {
+                        "pitch": 8,
+                        "yaw": 141.57,
+                        "type": "scene",
+                        "text": "Balcone",
+                        "sceneId": "Balcone"
+                    },
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+                    }
+
+                ]
+            },
+
+            "Disi": {
+                "title": "Disi",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Disi.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+
+
+            "Hall1": {
+                "title": "Hall1",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Hall1.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+
+            "Hall2": {
+                "title": "Hall2",
+                "id": "hall2",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Hall2.jpg",
+                "hotSpots": [{
+                        "pitch": 0,
+                        "yaw": -82,
+                        "type": "scene",
+                        "id": "2",
+                        "text": "AulaMagna",
+                        "sceneId": "AulaMagna"
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": -51,
+                        "type": "scene",
+                        "text": "Balcone",
+                        "sceneId": "Balcone"
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": 52,
+                        "type": "scene",
+                        "text": "Corridoio4",
+                        "sceneId": "Corridoio4"
+                    }
+                ]
+            },
+
+            "Uscita": {
+                "title": "Uscita",
+                "pitch": 0,
+                "yaw": 0,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Uscita.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": 0,
+                        "yaw": -114,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1"
+                    }
+                ]
+            },
+
+            "Laboratorio": {
+                "title": "Laboratorio",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/Laboratorio.jpg",
+                "hotSpots": [
+
+                    {
+                        "pitch": -23,
+                        "yaw": -301,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    }
+                ]
+            },
+
+            "AulaMagna": {
+                "title": "Aula Magna",
+                "hfov": 110,
+                "yaw": 5,
+                "type": "equirectangular",
+                "panorama": "img/rooms/AulaMagna.jpg",
+                "hotSpots": [{
+                        "pitch": -14.50,
+                        "yaw": -147.95,
+                        "cssClass": "currentGifDiv",
+                        "id": "1",
+                        "clickHandlerFunc": showModal,
+                        "clickHandlerArgs": "1",
+
+
+                    },
+                    {
+                        "pitch": -1.40,
+                        "yaw": -170.94,
+                        "type": "info",
+                        "text": "Questa è una bella lavagna"
+                    }
+                ]
+            }
+        }
+    });
+
+
+
+
+    function showModal(args, i) {
+        renderer.setClearColor(bgRendererColor, 0.15)
+        var tempI = i;
+        controls.enabled = true;
+        renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
+        document.getElementById("div3D").appendChild(renderer.domElement);
+        addPoint(tempI);
+        $("#mainModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+    }
+
+    function checkVictory() {
+        renderer.setClearColor(bgRendererColor, 0)
+        // if(viewer.getScene() == "Uscita"){
+        //     alert("dummy test, i'm going to another page!");
+        // } else
+        if (SdgFound == totalSdgNumberToFind) {
+            alert("Complimenti! Hai trovato tutti gli sdg!");
+            audio.play();
+            viewer.loadScene("Uscita", 0, -114, 120);
+        }
+    }
+
+    function addPoint(i) {
+
+        SdgFound++;
+        ldbar.set(SdgFound * 100 / 17);
+
+
+        if (viewer.getScene() != "Uscita") {
+            viewer.removeHotSpot("1", viewer.getScene());
+        }
+
+        if (viewer.getScene() == "Esterno1") {
+            viewer.addHotSpot({
+
+                "pitch": 0,
+                "yaw": 151,
+                "type": "scene",
+                "text": "Esterno2",
+                "sceneId": "Esterno2"
+            })
+        } else if (viewer.getScene() == "Esterno2") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 20,
+                "type": "scene",
+                "text": "Hall1",
+                "sceneId": "Hall1"
+            })
+        } else if (viewer.getScene() == "Hall1") {
+            viewer.addHotSpot({
+                "pitch": 0,
+                "yaw": -300,
+                "type": "scene",
+                "text": "Hall2",
+                "sceneId": "Hall2"
+            })
+        } else if (viewer.getScene() == "AulaMagna") {
+            viewer.addHotSpot({
+                "pitch": 5,
+                "yaw": -350,
+                "type": "scene",
+                "text": "Hall2",
+                "sceneId": "Hall2"
+            });
+            viewer.removeHotSpot("2", "Hall2");
+
+        } else if (viewer.getScene() == "Uscita") {
+            //do nothing
+        } else if (viewer.getScene() == "Aula1") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Corridoio2",
+                "sceneId": "Corridoio2"
+            });
+            viewer.removeHotSpot("1", "Corridoio2");
+
+        } else if (viewer.getScene() == "Aula2") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Corridoio2",
+                "sceneId": "Corridoio2"
+            });
+            viewer.removeHotSpot("3", "Corridoio2");
+
+        } else if (viewer.getScene() == "Aula3") {
+            viewer.addHotSpot({
+                "pitch": 0,
+                "yaw": -306,
+                "type": "scene",
+                "text": "Corridoio3",
+                "sceneId": "Corridoio3"
+            });
+            viewer.removeHotSpot("2", "Corridoio3");
+        } else if (viewer.getScene() == "Aula4") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Corridoio4",
+                "sceneId": "Corridoio4"
+            });
+            viewer.removeHotSpot("1", "Corridoio4");
+
+        } else if (viewer.getScene() == "Aula5") {
+            viewer.addHotSpot({
+                "pitch": -4.72,
+                "yaw": -47,
+                "type": "scene",
+                "text": "Corridoio3",
+                "sceneId": "Corridoio3"
+            });
+            viewer.removeHotSpot("3", "Corridoio3")
+        } else if (viewer.getScene() == "Bar") {
+            viewer.addHotSpot({
+                "pitch": -1,
+                "yaw": -23.5,
+                "type": "scene",
+                "text": "Corridoio4",
+                "sceneId": "Corridoio4"
+            });
+            viewer.removeHotSpot("2", "Corridoio4");
+        } else if (viewer.getScene() == "Biblioteca") {
+            viewer.addHotSpot({
+                "pitch": -3.66,
+                "yaw": 58.65,
+                "type": "scene",
+                "text": "Corte2",
+                "sceneId": "Corte2"
+            });
+            viewer.removeHotSpot("1", "Corte2");
+
+        } else if (viewer.getScene() == "Corridoio1") {
+            //do nothing
+        } else if (viewer.getScene() == "Corridoio2") {
+            //do nothing
+        } else if (viewer.getScene() == "Corridoio3") {
+            // do nothing
+        } else if (viewer.getScene() == "Corridoio4") {
+            // do nothing
+        } else if (viewer.getScene() == "Corte1") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Corte2",
+                "sceneId": "Corte2"
+            });
+            viewer.removeHotSpot("2", "Corte2");
+
+        } else if (viewer.getScene() == "Corte2") {
+            // do nothing
+        } else if (viewer.getScene() == "Disi") {
+            viewer.addHotSpot({
+                "pitch": -0.86,
+                "yaw": -154,
+                "type": "scene",
+                "text": "Corridoio3",
+                "sceneId": "Corridoio3"
+            })
+            viewer.removeHotSpot("1", "Corridoio3");
+        } else if (viewer.getScene() == "Esterno2") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Hall1",
+                "sceneId": "Hall1"
+            })
+        } else if (viewer.getScene() == "Hall1") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Hall2",
+                "sceneId": "Hall2"
+            })
+        } else if (viewer.getScene() == "Laboratorio") {
+            viewer.addHotSpot({
+                "pitch": -1.23,
+                "yaw": 150,
+                "type": "scene",
+                "text": "Corridoio2",
+                "sceneId": "Corridoio2"
+            });
+            viewer.removeHotSpot("2", "Corridoio2");
+        }
+
+    }
+
+    function loadVideo(videoName) {
+        let currentVideo = videoName;
+        document.getElementById("video").innerHTML = "<source src='./video/" + currentVideo + "' type='video/mp4'>";
+        video = document.getElementById('video');
+        video.preload = 'auto';
+        video.autoload = true;
+        video.load();
+        video.play();
+        cube.material.map = new THREE.VideoTexture(video);
+        cube.material.map.minFilter = THREE.LinearFilter;
+        cube.material.map.magFilter = THREE.LinearFilter;
+        cube.material.needsUpdate = true;
+    };
+
+    function loadDescription(desc) {
+        document.getElementById("descriptionDiv").innerHTML = "<p>" + desc + "</p>";
+    }
+
+
+    function sceneLoadListener() {
+        controls.reset();
+        controls.enabled = false;
+        renderer.setSize(rendererDivDimension, rendererDivDimension);
+        var hotspotList = document.getElementsByClassName("currentGifDiv");
+
+        //Div resize on zoom not possible or really difficult :(
+        //https://github.com/mpetroff/pannellum/issues/665
+        if (hotspotList.length > 0) {
+            hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 8);
+            hotspotList[0].style.height = hotspotList[0].style.width;
+
+
+            if (viewer.getScene() == "Esterno1") {
+                loadVideo("1.mp4");
+                loadDescription("Test Description1!");
+
+            }
+            if (viewer.getScene() == "Esterno2") {
+                loadVideo("2.mp4");
+                loadDescription("Test Description2!");
+
+            }
+            if (viewer.getScene() == "Hall1") {
+                loadVideo("3.mp4");
+                loadDescription("Test Description3!");
+
+            }
+            if (viewer.getScene() == "Aula1") {
+                loadVideo("4.mp4");
+                loadDescription("Test Description4!");
+            }
+            if (viewer.getScene() == "Aula2") {
+                loadVideo("5.mp4");
+                loadDescription("Test Description5!");
+
+            }
+            if (viewer.getScene() == "Aula3") {
+                loadVideo("6.mp4");
+                loadDescription("Test Description6!");
+
+            }
+            if (viewer.getScene() == "Aula4") {
+                loadVideo("7.mp4");
+                loadDescription("Test Description7!");
+
+            }
+            if (viewer.getScene() == "Aula5") {
+                loadVideo("8.mp4");
+                loadDescription("Test Description8!");
+
+            }
+            if (viewer.getScene() == "AulaMagna") {
+                loadVideo("9.mp4");
+                loadDescription("Test Description9!");
+            }
+            if (viewer.getScene() == "Balcone") {
+                loadVideo("10.mp4");
+                loadDescription("Test Description10!");
+
+            }
+            if (viewer.getScene() == "Bar") {
+                loadVideo("11.mp4");
+                loadDescription("Test Description11!");
+
+            }
+            if (viewer.getScene() == "Biblioteca") {
+                loadVideo("12.mp4");
+                loadDescription("Test Description12!");
+            }
+            if (viewer.getScene() == "Corridoio1") {
+                loadVideo("13.mp4");
+                loadDescription("Test Description13!");
+            }
+            if (viewer.getScene() == "Corte1") {
+                loadVideo("14.mp4");
+                loadDescription("Test Description14!");
+
+            }
+            if (viewer.getScene() == "Disi") {
+                loadVideo("15.mp4");
+                loadDescription("Test Description15!");
+
+            }
+            if (viewer.getScene() == "Corte2") {
+                loadVideo("16.mp4");
+                loadDescription("Test Description16!");
+
+            }
+            if (viewer.getScene() == "Laboratorio") {
+                loadVideo("17.mp4");
+                loadDescription("Test Description17!");
+
+            }
+            if (viewer.getScene() == "Uscita") {
+                loadVideo("finale.mp4");
+                loadDescription(
+                    "Test Description18! <br> <a href='./index.html'>Restart</a> <br> <a href='./dummy.html'>Google</a>"
+                );
+                document.getElementById("okButton").remove();
+                //last animated image must be bigger
+                hotspotList[0].style.width = rendererBiggerDivDimension;
+                hotspotList[0].style.height = hotspotList[0].style.width;
+                renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
+            }
+
+            hotspotList[0].appendChild(renderer.domElement);
+        }
+    };
+
+    viewer.on('load', sceneLoadListener);
+</script>
 
 <body>
     <video id="video" autoplay loop muted style="display:none">
@@ -21,13 +1128,35 @@
         <source src="./Audio/VictoryFanfare.mp3" type="audio/mp3">
     </audio>
 
+    <div>
+        <a data-toggle="modal" data-target="#mapModal">
+            <img id="mapButton" src="./img/Misc/mapIcon.png" alt="">
+        </a>
 
+    </div>
 
+    <div class="modal  fade" id="mapModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+                <div class="modal-body" style="overflow:hidden;">
+
+                    <div id="mapDiv">
+                        <img style="z-index: 2" id="mapImg" class="w-100" src="./img/Misc/Mappa.png" alt="">
+                    </div>
+                </div>
+                    <div class="text-center modal-body">
+                        <button class="btn btn-danger mx-auto d-block" id="resetMap">Centra</button>
+                    </div>
+
+            </div>
+
+        </div>
+    </div>
 
     <div class="modal fade" id="mainModal" role="dialog">
         <div class="modal-dialog">
 
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="text-center" id="div3D"></div>
@@ -44,1067 +1173,19 @@
     </div>
 
     <div id="panorama">
+
         <div id="controls">
+
             <div id="progressBar" data-value="0" data-fill-background-extrude="1" class="ldBar label-center"
-                style="margin: 0 auto;" data-type="fill" data-img="./img/ProgBar.svg"></div>
+                style="margin: 0 auto;" data-type="fill" data-img="./img/Misc/ProgBar.svg"></div>
         </div>
     </div>
 
 
 
-    <script src="js/three.js"></script>
+    
 
 
-    <script type="module">
-        document.getElementById("okButton").onclick = function () {
-            checkVictory()
-        };
-
-        var audio = document.getElementById("audio");
-        audio.volume = 0.1;
-        audio.preload = 'auto';
-        var ldbar = new ldBar("#progressBar");
-        var SdgFound = 0;
-        var totalSdgNumberToFind = 1;
-
-        //********************************************Variables three.js*************************************************
-
-        import {
-            OrbitControls
-        } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
-
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, 1, 1, 10000);
-        camera.position.z = 1000;
-
-        var bgRendererColor = 0xa2a0a5;
-        var rendererDivDimension = window.innerHeight / 7;
-        var rendererBiggerDivDimension = rendererDivDimension * 3
-        var renderer = new THREE.WebGLRenderer({
-            alpha: true
-        });
-
-        renderer.setClearColor(bgRendererColor, 0)
-        renderer.setSize(rendererDivDimension, rendererDivDimension);
-        renderer.render(scene, camera);
-
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enablePan = false;
-        controls.saveState();
-
-        //Cube vars
-        var video;
-        var texture;
-        var material;
-        var grabbing;
-        var geometry = new THREE.BoxGeometry(700, 700, 10, 10, 10, 10);
-        var cube = new THREE.Mesh(geometry, material);
-        material = new THREE.MeshBasicMaterial({
-            map: texture
-        });
-        grabbing = 0;
-
-        scene.add(cube);
-
-
-
-        //render cube
-
-        function render() {
-            requestAnimationFrame(render);
-            controls.addEventListener("start", function grab() {
-                grabbing = 1
-            }, false);
-            controls.addEventListener("end", function release() {
-                grabbing = 0
-            }, false);
-
-            if (!grabbing) {
-                cube.rotation.y += 0.005;
-            }
-            renderer.render(scene, camera);
-        };
-        render();
-
-
-        //***************************************************************PANNELLUM*************************************************************//
-
-
-        var viewer = pannellum.viewer('panorama', {
-            "hotSpotDebug": true,
-            "autoLoad": true,
-            "default": {
-                "firstScene": "Esterno1",
-                "sceneFadeDuration": 2000
-            },
-
-            "scenes": {
-
-
-                "Esterno1": {
-                    "title": "Esterno1",
-                    "pitch": 0,
-                    "yaw": -230,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Esterno1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-
-
-
-                "Esterno2": {
-                    "title": "Esterno2",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Esterno2.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-
-                "Aula1": {
-                    "title": "Aula1",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Aula1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-                        }
-                    ]
-                },
-                "Aula2": {
-                    "title": "Aula2",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Aula2.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        },
-                    ]
-                },
-                "Aula3": {
-                    "title": "Aula3",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Aula3.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-                "Aula4": {
-                    "title": "Aula4",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Aula4.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        },
-
-                    ]
-                },
-
-                "Aula5": {
-                    "title": "Aula5",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Aula5.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-                "Balcone": {
-                    "title": "Balcone",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Balcone.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        },
-                        {
-                            "pitch": -2.88,
-                            "yaw": -171.57,
-                            "type": "scene",
-                            "text": "Hall2",
-                            "sceneId": "Hall2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        }, {
-                            "pitch": -14,
-                            "yaw": 21,
-                            "type": "scene",
-                            "text": "Corte2",
-                            "sceneId": "Corte2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                    ]
-                },
-
-                "Bar": {
-                    "title": "Bar",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Bar.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-                "Biblioteca": {
-                    "title": "Biblioteca",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Biblioteca.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -8.75,
-                            "yaw": -204,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-                "Corridoio1": {
-                    "title": "Corridoio1",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corridoio1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -4,
-                            "yaw": 13,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        },
-                        {
-                            "pitch": -2.57,
-                            "yaw": 134,
-                            "type": "scene",
-                            "text": "Corridoio3",
-                            "sceneId": "Corridoio3",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": 0,
-                            "yaw": 262,
-                            "type": "scene",
-                            "text": "Corridoio2",
-                            "sceneId": "Corridoio2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        }
-                    ]
-                },
-
-
-                "Corridoio2": {
-                    "title": "Corridoio2",
-                    "id": "Corridoio2",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corridoio2.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -1.6,
-                            "yaw": -346,
-                            "type": "scene",
-                            "text": "Corte2",
-                            "sceneId": "Corte2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -2.8,
-                            "yaw": -164.63,
-                            "type": "scene",
-                            "text": "Corridoio1",
-                            "sceneId": "Corridoio1",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -4.6,
-                            "yaw": -192,
-                            "type": "scene",
-                            "text": "Aula1",
-                            "id": "1",
-                            "sceneId": "Aula1",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -3,
-                            "yaw": -283,
-                            "type": "scene",
-                            "text": "Laboratorio",
-                            "id": "2",
-                            "sceneId": "Laboratorio",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -5,
-                            "yaw": -131.23,
-                            "type": "scene",
-                            "id": "3",
-                            "text": "Aula2",
-                            "sceneId": "Aula2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        }
-                    ]
-                },
-
-
-                "Corridoio3": {
-                    "title": "Corridoio3",
-                    "id": "Corridoio3",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corridoio3.jpg",
-                    "hotSpots": [{
-                            "pitch": -3.89,
-                            "yaw": -67.53,
-                            "type": "scene",
-                            "text": "Corridoio1",
-                            "sceneId": "Corridoio1"
-                        },
-                        {
-                            "pitch": -3,
-                            "yaw": -250,
-                            "type": "scene",
-                            "text": "Corridoio4",
-                            "sceneId": "Corridoio4"
-                        }, {
-                            "pitch": -6.78,
-                            "yaw": -127,
-                            "id": "1",
-                            "type": "scene",
-                            "text": "Disi",
-                            "sceneId": "Disi"
-                        }, {
-                            "pitch": -5.92,
-                            "yaw": -200,
-                            "type": "scene",
-                            "id": "2",
-                            "text": "Aula3",
-                            "sceneId": "Aula3"
-                        }, {
-                            "pitch": -5,
-                            "yaw": -331,
-                            "type": "scene",
-                            "id": "3",
-                            "text": "Aula5",
-                            "sceneId": "Aula5"
-                        },
-                    ]
-                },
-
-
-                "Corridoio4": {
-                    "title": "Corridoio4",
-                    "id": "Corridoio4",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corridoio4.jpg",
-                    "hotSpots": [{
-                            "pitch": -3.65,
-                            "yaw": 339,
-                            "type": "scene",
-                            "text": "Corridoio3",
-                            "sceneId": "Corridoio3",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -2.5,
-                            "yaw": 248,
-                            "type": "scene",
-                            "text": "Hall2",
-                            "sceneId": "Hall2",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": -6.78,
-                            "yaw": 71.71,
-                            "type": "scene",
-                            "id": "1",
-                            "text": "Aula4",
-                            "sceneId": "Aula4"
-                        },
-                        {
-                            "pitch": -1.43,
-                            "yaw": -91.86,
-                            "type": "scene",
-                            "id": "2",
-                            "text": "Bar",
-                            "sceneId": "Bar"
-                        }
-                    ]
-                },
-
-
-                "Corte1": {
-                    "title": "Corte1",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corte1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-                        }
-                    ]
-                },
-
-                "Corte2": {
-                    "title": "Corte2",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Corte2.jpg",
-                    "hotSpots": [{
-                            "pitch": -2,
-                            "yaw": 58,
-                            "type": "scene",
-                            "id": "1",
-                            "text": "Biblioteca",
-                            "sceneId": "Biblioteca",
-                            "targetYaw": 107,
-                            "targetPitch": 4
-                        },
-                        {
-                            "pitch": 3,
-                            "yaw": -139.33,
-                            "type": "scene",
-                            "id": "2",
-                            "text": "Corte1",
-                            "sceneId": "Corte1"
-                        },
-                        {
-                            "pitch": -2,
-                            "yaw": -38,
-                            "type": "scene",
-                            "text": "Corridoio2",
-                            "sceneId": "Corridoio2"
-                        },
-                        {
-                            "pitch": 8,
-                            "yaw": 141.57,
-                            "type": "scene",
-                            "text": "Balcone",
-                            "sceneId": "Balcone"
-                        },
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-                        }
-
-                    ]
-                },
-
-                "Disi": {
-                    "title": "Disi",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Disi.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-
-
-                "Hall1": {
-                    "title": "Hall1",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Hall1.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-
-                "Hall2": {
-                    "title": "Hall2",
-                    "id": "hall2",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Hall2.jpg",
-                    "hotSpots": [{
-                            "pitch": 0,
-                            "yaw": -82,
-                            "type": "scene",
-                            "id": "2",
-                            "text": "AulaMagna",
-                            "sceneId": "AulaMagna"
-                        },
-                        {
-                            "pitch": 0,
-                            "yaw": -51,
-                            "type": "scene",
-                            "text": "Balcone",
-                            "sceneId": "Balcone"
-                        },
-                        {
-                            "pitch": 0,
-                            "yaw": 52,
-                            "type": "scene",
-                            "text": "Corridoio4",
-                            "sceneId": "Corridoio4"
-                        }
-                    ]
-                },
-
-                "Uscita": {
-                    "title": "Uscita",
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Uscita.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": 0,
-                            "yaw": -114,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1"
-                        }
-                    ]
-                },
-
-                "Laboratorio": {
-                    "title": "Laboratorio",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/Laboratorio.jpg",
-                    "hotSpots": [
-
-                        {
-                            "pitch": -23,
-                            "yaw": -301,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        }
-                    ]
-                },
-
-                "AulaMagna": {
-                    "title": "Aula Magna",
-                    "hfov": 110,
-                    "yaw": 5,
-                    "type": "equirectangular",
-                    "panorama": "img/rooms/AulaMagna.jpg",
-                    "hotSpots": [{
-                            "pitch": -14.50,
-                            "yaw": -147.95,
-                            "cssClass": "currentGifDiv",
-                            "id": "1",
-                            "clickHandlerFunc": showModal,
-                            "clickHandlerArgs": "1",
-
-
-                        },
-                        {
-                            "pitch": -1.40,
-                            "yaw": -170.94,
-                            "type": "info",
-                            "text": "Questa è una bella lavagna"
-                        }
-                    ]
-                }
-            }
-        });
-
-
-
-
-        function showModal(args, i) {
-            renderer.setClearColor(bgRendererColor, 0.15)
-            var tempI = i;
-            controls.enabled = true;
-            renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
-            document.getElementById("div3D").appendChild(renderer.domElement);
-            addPoint(tempI);
-            $("#mainModal").modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-
-        }
-
-        function checkVictory() {
-            renderer.setClearColor(bgRendererColor, 0)
-            // if(viewer.getScene() == "Uscita"){
-            //     alert("dummy test, i'm going to another page!");
-            // } else
-            if (SdgFound == totalSdgNumberToFind) {
-                alert("Complimenti! Hai trovato tutti gli sdg!");
-                audio.play();
-                viewer.loadScene("Uscita", 0, -114, 120);
-            }
-        }
-
-        function addPoint(i) {
-
-            SdgFound++;
-            ldbar.set(SdgFound * 100 / 17);
-
-
-            if (viewer.getScene() != "Uscita") {
-                viewer.removeHotSpot("1", viewer.getScene());
-            }
-
-            if (viewer.getScene() == "Esterno1") {
-                viewer.addHotSpot({
-
-                    "pitch": 0,
-                    "yaw": 151,
-                    "type": "scene",
-                    "text": "Esterno2",
-                    "sceneId": "Esterno2"
-                })
-            } else if (viewer.getScene() == "Esterno2") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 20,
-                    "type": "scene",
-                    "text": "Hall1",
-                    "sceneId": "Hall1"
-                })
-            } else if (viewer.getScene() == "Hall1") {
-                viewer.addHotSpot({
-                    "pitch": 0,
-                    "yaw": -300,
-                    "type": "scene",
-                    "text": "Hall2",
-                    "sceneId": "Hall2"
-                })
-            } else if (viewer.getScene() == "AulaMagna") {
-                viewer.addHotSpot({
-                    "pitch": 5,
-                    "yaw": -350,
-                    "type": "scene",
-                    "text": "Hall2",
-                    "sceneId": "Hall2"
-                });
-                viewer.removeHotSpot("2", "Hall2");
-
-            } else if (viewer.getScene() == "Uscita") {
-                //do nothing
-            } else if (viewer.getScene() == "Aula1") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Corridoio2",
-                    "sceneId": "Corridoio2"
-                });
-                viewer.removeHotSpot("1", "Corridoio2");
-
-            } else if (viewer.getScene() == "Aula2") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Corridoio2",
-                    "sceneId": "Corridoio2"
-                });
-                viewer.removeHotSpot("3", "Corridoio2");
-
-            } else if (viewer.getScene() == "Aula3") {
-                viewer.addHotSpot({
-                    "pitch": 0,
-                    "yaw": -306,
-                    "type": "scene",
-                    "text": "Corridoio3",
-                    "sceneId": "Corridoio3"
-                });
-                viewer.removeHotSpot("2", "Corridoio3");
-            } else if (viewer.getScene() == "Aula4") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Corridoio4",
-                    "sceneId": "Corridoio4"
-                });
-                viewer.removeHotSpot("1", "Corridoio4");
-
-            } else if (viewer.getScene() == "Aula5") {
-                viewer.addHotSpot({
-                    "pitch": -4.72,
-                    "yaw": -47,
-                    "type": "scene",
-                    "text": "Corridoio3",
-                    "sceneId": "Corridoio3"
-                });
-                viewer.removeHotSpot("3", "Corridoio3")
-            } else if (viewer.getScene() == "Bar") {
-                viewer.addHotSpot({
-                    "pitch": -1,
-                    "yaw": -23.5,
-                    "type": "scene",
-                    "text": "Corridoio4",
-                    "sceneId": "Corridoio4"
-                });
-                viewer.removeHotSpot("2", "Corridoio4");
-            } else if (viewer.getScene() == "Biblioteca") {
-                viewer.addHotSpot({
-                    "pitch": -3.66,
-                    "yaw": 58.65,
-                    "type": "scene",
-                    "text": "Corte2",
-                    "sceneId": "Corte2"
-                });
-                viewer.removeHotSpot("1", "Corte2");
-
-            } else if (viewer.getScene() == "Corridoio1") {
-                //do nothing
-            } else if (viewer.getScene() == "Corridoio2") {
-                //do nothing
-            } else if (viewer.getScene() == "Corridoio3") {
-                // do nothing
-            } else if (viewer.getScene() == "Corridoio4") {
-                // do nothing
-            } else if (viewer.getScene() == "Corte1") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Corte2",
-                    "sceneId": "Corte2"
-                });
-                viewer.removeHotSpot("2", "Corte2");
-
-            } else if (viewer.getScene() == "Corte2") {
-                // do nothing
-            } else if (viewer.getScene() == "Disi") {
-                viewer.addHotSpot({
-                    "pitch": -0.86,
-                    "yaw": -154,
-                    "type": "scene",
-                    "text": "Corridoio3",
-                    "sceneId": "Corridoio3"
-                })
-                viewer.removeHotSpot("1", "Corridoio3");
-            } else if (viewer.getScene() == "Esterno2") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Hall1",
-                    "sceneId": "Hall1"
-                })
-            } else if (viewer.getScene() == "Hall1") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Hall2",
-                    "sceneId": "Hall2"
-                })
-            } else if (viewer.getScene() == "Laboratorio") {
-                viewer.addHotSpot({
-                    "pitch": -1.23,
-                    "yaw": 150,
-                    "type": "scene",
-                    "text": "Corridoio2",
-                    "sceneId": "Corridoio2"
-                });
-                viewer.removeHotSpot("2", "Corridoio2");
-            }
-
-        }
-
-        function loadVideo(videoName) {
-            let currentVideo = videoName;
-            document.getElementById("video").innerHTML = "<source src='./video/" + currentVideo + "' type='video/mp4'>";
-            video = document.getElementById('video');
-            video.preload = 'auto';
-            video.autoload = true;
-            video.load();
-            video.play();
-            cube.material.map = new THREE.VideoTexture(video);
-            cube.material.map.minFilter = THREE.LinearFilter;
-            cube.material.map.magFilter = THREE.LinearFilter;
-            cube.material.needsUpdate = true;
-        };
-
-        function loadDescription(desc) {
-            document.getElementById("descriptionDiv").innerHTML = "<p>" + desc + "</p>";
-        }
-
-
-        function sceneLoadListener() {
-            controls.reset();
-            controls.enabled = false;
-            renderer.setSize(rendererDivDimension, rendererDivDimension);
-            var hotspotList = document.getElementsByClassName("currentGifDiv");
-
-            //Div resize on zoom not possible or really difficult :(
-            //https://github.com/mpetroff/pannellum/issues/665
-            if (hotspotList.length > 0) {
-                hotspotList[0].style.width = (document.getElementById('panorama').clientHeight / 8);
-                hotspotList[0].style.height = hotspotList[0].style.width;
-
-
-                if (viewer.getScene() == "Esterno1") {
-                    loadVideo("1.mp4");
-                    loadDescription("Test Description1!");
-
-                }
-                if (viewer.getScene() == "Esterno2") {
-                    loadVideo("2.mp4");
-                    loadDescription("Test Description2!");
-
-                }
-                if (viewer.getScene() == "Hall1") {
-                    loadVideo("3.mp4");
-                    loadDescription("Test Description3!");
-
-                }
-                if (viewer.getScene() == "Aula1") {
-                    loadVideo("4.mp4");
-                    loadDescription("Test Description4!");
-                }
-                if (viewer.getScene() == "Aula2") {
-                    loadVideo("5.mp4");
-                    loadDescription("Test Description5!");
-
-                }
-                if (viewer.getScene() == "Aula3") {
-                    loadVideo("6.mp4");
-                    loadDescription("Test Description6!");
-
-                }
-                if (viewer.getScene() == "Aula4") {
-                    loadVideo("7.mp4");
-                    loadDescription("Test Description7!");
-
-                }
-                if (viewer.getScene() == "Aula5") {
-                    loadVideo("8.mp4");
-                    loadDescription("Test Description8!");
-
-                }
-                if (viewer.getScene() == "AulaMagna") {
-                    loadVideo("9.mp4");
-                    loadDescription("Test Description9!");
-                }
-                if (viewer.getScene() == "Balcone") {
-                    loadVideo("10.mp4");
-                    loadDescription("Test Description10!");
-
-                }
-                if (viewer.getScene() == "Bar") {
-                    loadVideo("11.mp4");
-                    loadDescription("Test Description11!");
-
-                }
-                if (viewer.getScene() == "Biblioteca") {
-                    loadVideo("12.mp4");
-                    loadDescription("Test Description12!");
-                }
-                if (viewer.getScene() == "Corridoio1") {
-                    loadVideo("13.mp4");
-                    loadDescription("Test Description13!");
-                }
-                if (viewer.getScene() == "Corte1") {
-                    loadVideo("14.mp4");
-                    loadDescription("Test Description14!");
-
-                }
-                if (viewer.getScene() == "Disi") {
-                    loadVideo("15.mp4");
-                    loadDescription("Test Description15!");
-
-                }
-                if (viewer.getScene() == "Corte2") {
-                    loadVideo("16.mp4");
-                    loadDescription("Test Description16!");
-
-                }
-                if (viewer.getScene() == "Laboratorio") {
-                    loadVideo("17.mp4");
-                    loadDescription("Test Description17!");
-
-                }
-                if (viewer.getScene() == "Uscita") {
-                    loadVideo("finale.mp4");
-                    loadDescription(
-                        "Test Description18! <br> <a href='./index.html'>Restart</a> <br> <a href='./dummy.html'>Google</a>"
-                        );
-                    document.getElementById("okButton").remove();
-                    //last animated image must be bigger
-                    hotspotList[0].style.width = rendererBiggerDivDimension;
-                    hotspotList[0].style.height = hotspotList[0].style.width;
-                    renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
-                }
-
-                hotspotList[0].appendChild(renderer.domElement);
-            }
-        };
-
-        viewer.on('load', sceneLoadListener);
-    </script>
 
 </body>
 
