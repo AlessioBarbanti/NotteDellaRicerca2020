@@ -17,16 +17,6 @@
 
 <script type="module">
 
-    function isMobile() {
-        try {
-            document.createEvent("TouchEvent");
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    if (!isMobile()) {
 
         $('#mapDiv').on('mousedown', function (e) {
 
@@ -50,22 +40,16 @@
                 $(this).removeClass('active');
 
             });
-
-            return false;
         });
 
 
-    } else {
-        document.getElementsByClassName("modal-body")[0].style.overflow = "scroll";
-    }
 
+    $("#resetMap").click(function () {
 
-$( "#resetMap").click(function() {
+        document.getElementById("mapDiv").style.left = 0;
+        document.getElementById("mapDiv").style.top = 0;
 
-    document.getElementById("mapDiv").style.left = 0;
-    document.getElementById("mapDiv").style.top = 0;
-    
-});
+    });
 
 
     document.getElementById("okButton").onclick = function () {
@@ -75,10 +59,12 @@ $( "#resetMap").click(function() {
     var audio = document.getElementById("audio");
     audio.volume = 0.1;
     audio.preload = 'auto';
-    
+
     var SdgFound = 0;
     var totalSdgNumberToFind = 17;
-    var ldbar = new ldBar("#progressBar",{"max" : totalSdgNumberToFind});
+    var ldbar = new ldBar("#progressBar", {
+        "max": totalSdgNumberToFind
+    });
 
     //********************************************Variables three.js*************************************************
 
@@ -795,6 +781,7 @@ $( "#resetMap").click(function() {
         controls.enabled = true;
         renderer.setSize(rendererBiggerDivDimension, rendererBiggerDivDimension);
         document.getElementById("div3D").appendChild(renderer.domElement);
+
         addPoint(tempI);
         $("#mainModal").modal({
             backdrop: 'static',
@@ -818,7 +805,7 @@ $( "#resetMap").click(function() {
     function addPoint(i) {
 
         SdgFound++;
-        
+
         ldbar.set(SdgFound);
 
 
@@ -1145,9 +1132,9 @@ $( "#resetMap").click(function() {
                         <img style="z-index: 2" id="mapImg" class="w-100" src="./img/Misc/Mappa.png" alt="">
                     </div>
                 </div>
-                    <div class="text-center modal-body">
-                        <button class="btn btn-danger mx-auto d-block" id="resetMap">Centra</button>
-                    </div>
+                <div class="text-center modal-body">
+                    <button class="btn btn-danger mx-auto d-block" id="resetMap">Centra</button>
+                </div>
 
             </div>
 
@@ -1183,7 +1170,7 @@ $( "#resetMap").click(function() {
 
 
 
-    
+
 
 
 
