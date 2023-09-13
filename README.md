@@ -2,7 +2,7 @@
 
 
 TODO
-
+- Fix this Readme
 - Define Homepage style and make it ok
 - Choose gif and arrow place fix it
 - Decide user route
